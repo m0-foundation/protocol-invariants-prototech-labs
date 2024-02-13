@@ -1,0 +1,37 @@
+{
+  "name": "@mzero-labs/protocol",
+  "version": "1.0.0",
+  "description": "M^0 Protocol contracts",
+  "main": "index.js",
+  "author": "M^0 Labs <contact@m0.xyz>",
+  "license": "GPL-3.0",
+  "scripts": {
+    "coverage": "forge coverage --report lcov && lcov --extract lcov.info -o lcov.info 'src/*' && genhtml lcov.info -o coverage",
+    "prettier": "prettier --write --plugin=prettier-plugin-solidity 'script/**/*.sol' 'src/**/*.sol' 'test/**/*.sol'",
+    "slither": "forge build --build-info --skip '*/test/**' --skip '*/script/**' --force && slither --compile-force-framework foundry --ignore-compile --config-file slither.config.json --fail-high .",
+    "solhint": "solhint -f stylish 'src/**/*.sol'",
+    "solhint-fix": "solhint --fix 'src/**/*.sol'"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@typechain/ethers-v6": "^0.5.0",
+    "@typechain/hardhat": "^9.0.0",
+    "chai": "^4.2.0",
+    "ethers": "^6.4.0",
+    "hardhat": "^2.19.2",
+    "hardhat-gas-reporter": "^1.0.9",
+    "prettier": "^3.0.0",
+    "prettier-plugin-solidity": "^1.2.0",
+    "rand-seed": "^1.0.2",
+    "solhint": "^3.4.1",
+    "solidity-coverage": "^0.8.0",
+    "typechain": "^8.3.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

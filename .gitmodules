@@ -1,0 +1,9 @@
+[submodule "lib/ttg"]
+	path = lib/ttg
+	url = git@github.com:MZero-Labs/ttg.git
+[submodule "lib/forge-std"]
+	path = lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "lib/protocol"]
+	path = lib/protocol
+	url = git@github.com:MZero-Labs/protocol.git

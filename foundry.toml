@@ -1,0 +1,19 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+evm_version = "shanghai"
+optimizer = true
+optimizer_runs = 999999
+build_info = true
+sizes = true
+solc-version = "0.8.23"
+gas_limit = "18446744073709551615" # u64::MAX
+
+[invariant]
+runs = 2
+depth = 200
+call_override = false
+fail_on_revert = true
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
