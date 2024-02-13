@@ -1,21 +1,3 @@
-// SPDX-FileCopyrightText: © 2024 Prototech Labs <info@prototechlabs.dev>
-// SPDX-License-Identifier: AGPL-3.0-or-later
-//
-// Copyright © 2024 Christopher Mooney
-// Copyright © 2024 Chris Smith
-// Copyright © 2024 Brian McMichael
-// Copyright © 2024 Derek Flossman
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 pragma solidity ^0.8.23;
 
 // solhint-disable-next-line no-console, no-global-import
@@ -34,9 +16,12 @@ import {
     DeployBase,
     DistributionVault,
     PowerToken,
+    PowerTokenDeployer,
     Registrar,
     StandardGovernor,
+    StandardGovernorDeployer,
     EmergencyGovernor,
+    EmergencyGovernorDeployer,
     ZeroGovernor,
     ZeroToken
 } from "./lib/Ttg.sol";
@@ -140,6 +125,28 @@ contract TTGInvariants is
         vm.prank(registrar.standardGovernor());
         zeroToken.mint(deployer.addr, 1e12);
 
+        // TODO make sure the contract deployer actors are not in the msgSender list
+        // power token deployer
+        powerTokenDeployer = PowerTokenDeployer(registrar.powerTokenDeployer());
+        _powerTokenDeployer.addr = address(powerTokenDeployer);
+        vm.prank(registrar.standardGovernor());
+        zeroToken.mint(_powerTokenDeployer.addr, 1e12);
+        _actors.push(_powerTokenDeployer);
+
+        // standard governeor deployer
+        standardGovernorDeployer = StandardGovernorDeployer(registrar.standardGovernorDeployer());
+        _standardGovernorDeployer.addr = address(standardGovernorDeployer);
+        vm.prank(registrar.standardGovernor());
+        zeroToken.mint(_standardGovernorDeployer.addr, 1e12);
+        _actors.push(_standardGovernorDeployer);
+
+        // emergency governeor deployer
+        emergencyGovernorDeployer = EmergencyGovernorDeployer(registrar.emergencyGovernorDeployer());
+        _emergencyGovernorDeployer.addr = address(emergencyGovernorDeployer);
+        vm.prank(registrar.standardGovernor());
+        zeroToken.mint(_emergencyGovernorDeployer.addr, 1e12);
+        _actors.push(_emergencyGovernorDeployer);
+
         // power token
         powerToken = PowerToken(registrar.powerToken());
         _powerToken.addr = address(powerToken);
@@ -154,21 +161,21 @@ contract TTGInvariants is
         zeroToken.mint(_distributionVault.addr, 1e12);
         _receivers.push(_distributionVault);
 
-        // we need the StandardGovernor
+        // StandardGovernor
         standardGovernor = StandardGovernor(registrar.standardGovernor());
         _standardGovernor.addr = address(standardGovernor);
         vm.prank(_standardGovernor.addr);
         zeroToken.mint(_standardGovernor.addr, 1e12);
         _receivers.push(_standardGovernor);
 
-        // we need the EmergencyGovernor
+        // EmergencyGovernor
         emergencyGovernor = EmergencyGovernor(registrar.emergencyGovernor());
         _emergencyGovernor.addr = address(emergencyGovernor);
         vm.prank(_standardGovernor.addr);
         zeroToken.mint(_emergencyGovernor.addr, 1e12);
         _receivers.push(_emergencyGovernor);
 
-        // we need the ZeroGovernor
+        // ZeroGovernor
         zeroGovernor = ZeroGovernor(registrar.zeroGovernor());
         _zeroGovernor.addr = address(zeroGovernor);
         vm.prank(_standardGovernor.addr);
@@ -190,6 +197,32 @@ contract TTGInvariants is
         _standardGovernorHandler._initRateModels(address(registrar));
     }
 
+    function poke(address standardGovernor_, address emergencyGovernor_, address powerToken_) external override {
+        // new standard governor
+        standardGovernor = StandardGovernor(standardGovernor_);
+        _standardGovernor.addr = address(standardGovernor);
+        _actors.push(_standardGovernor);
+        _standardGovernorHandler.addActor(_standardGovernor);
+        _standardGovernorHandler.setGovernor(_standardGovernor.addr);
+        excludeContract(_standardGovernor.addr);
+
+        // new emergency governor
+        emergencyGovernor = EmergencyGovernor(emergencyGovernor_);
+        _emergencyGovernor.addr = address(emergencyGovernor);
+        _actors.push(_emergencyGovernor);
+        _emergencyGovernorHandler.addActor(_emergencyGovernor);
+        _emergencyGovernorHandler.setGovernor(_emergencyGovernor.addr);
+        excludeContract(_emergencyGovernor.addr);
+
+        // new power token
+        powerToken = PowerToken(powerToken_);
+        _powerToken.addr = address(powerToken);
+        _actors.push(_powerToken);
+        _powerTokenHandler.addActor(_powerToken);
+        _powerTokenHandler.setPowerToken(_powerToken.addr);
+        excludeContract(_powerToken.addr);
+    }
+
     // Invariant harness sanity check
     function invariant_TTG_T1() public leap {
         uint256 timestamp = block.timestamp;
@@ -203,5 +236,26 @@ contract TTGInvariants is
         //require(timestamp == _emergencyGovernorHandler.timestamp(), "Invariant TTG_T1_EG");
         //require(timestamp == _zeroGovernorHandler.timestamp(), "Invariant TTG_T1_ZG");
         //require(timestamp == _minterGatewayHandler.timestamp(), "Invariant TTG_T1_MG");
+    }
+
+    function invariant_TTG_M1() public leap {
+        require(
+            _standardGovernor.addr == registrar.standardGovernor(),
+            "Invariant TTG_M1"
+        );
+    }
+
+    function invariant_TTG_M2() public leap {
+        require(
+            _emergencyGovernor.addr == registrar.emergencyGovernor(),
+            "Invariant TTG_M2"
+        );
+    }
+
+    function invariant_TTG_M3() public leap {
+        require(
+            _powerToken.addr == registrar.powerToken(),
+            "Invariant TTG_M3"
+        );
     }
 }

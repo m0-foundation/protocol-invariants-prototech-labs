@@ -1,21 +1,4 @@
-// SPDX-FileCopyrightText: © 2024 Prototech Labs <info@prototechlabs.dev>
-// SPDX-License-Identifier: AGPL-3.0-or-later
-//
-// Copyright © 2024 Christopher Mooney
-// Copyright © 2024 Chris Smith
-// Copyright © 2024 Brian McMichael
-// Copyright © 2024 Derek Flossman
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 pragma solidity ^0.8.23;
 
 // solhint-disable-next-line no-console, no-global-import
@@ -32,13 +15,13 @@ import {
 
 import {
     EmergencyGovernor,
+    MockBootstrapToken,
     MockEmergencyGovernor,
     MockEmergencyGovernorDeployer,
     MockStandardGovernorDeployer,
     MockRegistrar,
     MockStandardGovernor,
     MockPowerTokenDeployer,
-    MockBootstrapToken,
     MockEmergencyGovernor,
     ZeroGovernor
 } from "./lib/Ttg.sol";
@@ -54,8 +37,8 @@ contract EmergencyGovernorInvariants is BaseInvariants, BaseMZeroInvariants {
     function setUp() public virtual {
         if (!_integration) {
             _mockBootstrapToken = new MockBootstrapToken();
-            _mockZeroToken = new MockBootstrapToken();
-            _mockPowerToken = new MockBootstrapToken();
+            MockBootstrapToken mockPowerToken_ = new MockBootstrapToken(); 
+            MockBootstrapToken mockZeroToken_ = new MockBootstrapToken();
             _mockEmergencyGovernor = new MockEmergencyGovernor();
             _mockEmergencyGovernorDeployer = new MockEmergencyGovernorDeployer();
             _mockPowerTokenDeployer = new MockPowerTokenDeployer();
@@ -64,21 +47,24 @@ contract EmergencyGovernorInvariants is BaseInvariants, BaseMZeroInvariants {
             _mockStandardGovernorDeployer = new MockStandardGovernorDeployer();
 
             _mockBootstrapToken.setTotalSupply(1);
-            _mockPowerToken.setTotalSupply(1);
+            mockPowerToken_.setTotalSupply(1);
 
             _mockEmergencyGovernor.setThresholdRatio(1);
+            _mockEmergencyGovernorDeployer.setLastDeploy(address(_mockEmergencyGovernor));
             _mockEmergencyGovernorDeployer.setNextDeploy(address(_mockEmergencyGovernor));
 
-            _mockPowerTokenDeployer.setNextDeploy(address(_mockPowerToken));
+            _mockPowerTokenDeployer.setLastDeploy(address(mockPowerToken_));
+            _mockPowerTokenDeployer.setNextDeploy(address(mockPowerToken_));
 
-            _mockStandardGovernor.setVoteToken(address(_mockPowerToken));
+            _mockStandardGovernor.setVoteToken(address(mockPowerToken_));
             _mockStandardGovernor.setCashToken(address(_cashToken1));
             _mockStandardGovernor.setProposalFee(1e18);
 
+            _mockStandardGovernorDeployer.setLastDeploy(address(_mockStandardGovernor));
             _mockStandardGovernorDeployer.setNextDeploy(address(_mockStandardGovernor));
 
             zeroGovernor = new ZeroGovernor(
-                address(_mockZeroToken),
+                address(mockZeroToken_),
                 address(_mockEmergencyGovernorDeployer),
                 address(_mockPowerTokenDeployer),
                 address(_mockStandardGovernorDeployer),
@@ -90,7 +76,7 @@ contract EmergencyGovernorInvariants is BaseInvariants, BaseMZeroInvariants {
             );
 
             emergencyGovernor = new EmergencyGovernor(
-                address(_mockPowerToken),
+                address(mockPowerToken_),
                 address(zeroGovernor),
                 address(_mockRegistrar),
                 address(_mockStandardGovernor),

@@ -1,21 +1,3 @@
-// SPDX-FileCopyrightText: © 2024 Prototech Labs <info@prototechlabs.dev>
-// SPDX-License-Identifier: AGPL-3.0-or-later
-//
-// Copyright © 2024 Christopher Mooney
-// Copyright © 2024 Chris Smith
-// Copyright © 2024 Brian McMichael
-// Copyright © 2024 Derek Flossman
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Affero General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-// You should have received a copy of the GNU Affero General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 pragma solidity ^0.8.23;
 import "./abstract/RegistrarGovernorHandler.sol";
@@ -28,11 +10,16 @@ contract StandardGovernorHandler is RegistrarGovernorHandler {
 
     uint256 public nonZeroGovernorViolationCount;
 
-    constructor(address _testContract, address _governor, bytes4[] memory validCallData_)
-    BaseHandler(_testContract)
-    ThresholdGovernorHandler(validCallData_)
-    BatchGovernorHandler(_governor)
-    {}
+    constructor(
+        address _testContract,
+        address _governor,
+        bytes4[] memory validCallData_,
+        address[] memory _cashTokens
+    ) BaseHandler(_testContract)
+      ThresholdGovernorHandler(validCallData_)
+      BatchGovernorHandler(_governor) {
+        cashTokens = _cashTokens;
+      }
 
     function init(
         uint256 _numOfActors
@@ -81,15 +68,14 @@ contract StandardGovernorHandler is RegistrarGovernorHandler {
     //
     function setCashToken(
         uint256 _actorIndex,
-        address _newCashToken,
+        uint256 _newCashToken,
         uint256 _newProposalFee
-    ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
-        console.log("actor.addr", actor.addr);
-        console.log("zeroGovernor.addr", zeroGovernor.addr);
+    ) public resetErrors leap(_actorIndex) useRandomMsgSenderWeighted(_actorIndex, governor, 33) {
+        _newCashToken  = bound(_newCashToken, 0, cashTokens.length - 1);
 
         startGas();
         try StandardGovernor(governor).setCashToken(
-            _newCashToken,
+            cashTokens[_newCashToken],
             _newProposalFee
         ) {
             stopGas();
@@ -100,9 +86,8 @@ contract StandardGovernorHandler is RegistrarGovernorHandler {
         } catch Error(string memory _err) {
             expectedError(_err);
         } catch (bytes memory _err) {
-            if(_newCashToken == address(0)) addExpectedError("InvalidCashTokenAddress()");
+            if(cashTokens[_newCashToken] == address(0)) addExpectedError("InvalidCashTokenAddress()");
             if(actor.addr != StandardGovernor(governor).zeroGovernor()) addExpectedError("NotZeroGovernor()");
-            // if(newCashToken == address(0)) expectedError("InvalidCashTokenAddress()");
             expectedError(_err);
         }
     }
