@@ -1,4 +1,21 @@
-
+// SPDX-FileCopyrightText: © 2024 Prototech Labs <info@prototechlabs.dev>
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// Copyright © 2024 Christopher Mooney
+// Copyright © 2024 Chris Smith
+// Copyright © 2024 Brian McMichael
+// Copyright © 2024 Derek Flossman
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 pragma solidity ^0.8.23;
 
 // solhint-disable-next-line no-console, no-global-import
@@ -33,7 +50,7 @@ contract ZeroGovernorInvariants is BaseInvariants, BaseMZeroInvariants {
         if (!_integration) {
             _mockBootstrapToken = new MockBootstrapToken();
             MockBootstrapToken mockPowerToken_ = new MockBootstrapToken();
-            MockBootstrapToken mockZeroToken_ = new MockBootstrapToken(); 
+            MockBootstrapToken mockZeroToken_ = new MockBootstrapToken();
             _mockEmergencyGovernor = new MockEmergencyGovernor();
             _mockEmergencyGovernorDeployer = new MockEmergencyGovernorDeployer();
             _mockPowerTokenDeployer = new MockPowerTokenDeployer();
@@ -70,7 +87,7 @@ contract ZeroGovernorInvariants is BaseInvariants, BaseMZeroInvariants {
                 _allowedCashTokens
             );
         }
-        
+
         for (uint256 i = 0; i < 5; i++) {
             // prevent these contracts from being fuzzed
             // console.log("adding standardGovernorDeployer addr: ", ContractHelper.getContractFrom(_standardGovernorDeployer.addr, vm.getNonce(_standardGovernorDeployer.addr) + i));
