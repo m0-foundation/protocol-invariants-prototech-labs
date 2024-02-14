@@ -56,7 +56,6 @@ abstract contract BatchGovernorHandler is BaseHandler {
                 addExpectedErrorBytes32(0x0);
                 addExpectedError("ProposalDoesNotExist()");
             }
-            // TODO: figure out what causes this in PowerToken
             addExpectedError("NotPastTimepoint(uint48,uint48)");
             expectedError(_err);
         }
@@ -98,7 +97,6 @@ abstract contract BatchGovernorHandler is BaseHandler {
             }
             // array out-of-bounds error
             if(proposalLength > supportLength) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x32)));
-            // TODO: figure out what causes this in PowerToken
             addExpectedError("NotPastTimepoint(uint48,uint48)");
             expectedError(_err);
         }
@@ -126,7 +124,6 @@ abstract contract BatchGovernorHandler is BaseHandler {
                 addExpectedErrorBytes32(0x0);
                 addExpectedError("ProposalDoesNotExist()");
             }
-            // TODO: figure out what causes this in PowerToken
             addExpectedError("NotPastTimepoint(uint48,uint48)");
             expectedError(_err);
         }
@@ -176,7 +173,6 @@ abstract contract BatchGovernorHandler is BaseHandler {
                 addExpectedErrorBytes32(0x0);
                 addExpectedError("ProposalDoesNotExist()");
             }
-            // TODO: figure out what causes this in PowerToken
             addExpectedError("NotPastTimepoint(uint48,uint48)");
             expectedError(_err);
         }
@@ -228,7 +224,6 @@ abstract contract BatchGovernorHandler is BaseHandler {
                 addExpectedErrorBytes32(0x0);
                 addExpectedError("ProposalDoesNotExist()");
             }
-            // TODO: figure out what causes this in PowerToken
             addExpectedError("NotPastTimepoint(uint48,uint48)");
             expectedError(_err);
         }
@@ -293,7 +288,6 @@ abstract contract BatchGovernorHandler is BaseHandler {
             }
             // array out-of-bounds error
             if(proposalLength > supportLength) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x32)));
-            // TODO: figure out what causes this in PowerToken
             addExpectedError("NotPastTimepoint(uint48,uint48)");
             expectedError(_err);
         }
@@ -360,7 +354,6 @@ abstract contract BatchGovernorHandler is BaseHandler {
             }
             // array out-of-bounds error
             if(proposalIds.length > support.length) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x32)));
-            // TODO: figure out what causes this in PowerToken
             addExpectedError("NotPastTimepoint(uint48,uint48)");
             expectedError(_err);
         }
