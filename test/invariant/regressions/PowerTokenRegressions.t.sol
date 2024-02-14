@@ -31,7 +31,8 @@ contract PowerTokenRegressionTests is PowerTokenInvariants {
         _powerTokenHandler.setMaxLeap(maxLeap);
     }
 
-    // // TODO: Explore the source of this regression
+    // 7.3 PowerToken: Delegation and transfer fails when actor.balance > actor.votes
+    // https://github.com/Prototech-Labs/mzero-invariants/issues/147
     // /*
     //     clock(): 572
     //     From:  0xFEfC6BAF87cF3684058D62Da40Ff3A795946Ab06
