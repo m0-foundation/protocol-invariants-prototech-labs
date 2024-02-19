@@ -1,6 +1,0 @@
-/out
-hevm*
-.vscode/*
-artifacts/*
-docs/*
-metadata.json
