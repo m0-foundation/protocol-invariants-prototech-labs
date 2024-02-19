@@ -1,6 +1,7 @@
 [submodule "lib/ttg"]
 	path = lib/ttg
 	url = git@github.com:MZero-Labs/ttg.git
+	branch = audit-fix/prototech-c01-delegate-to-zero-option-2
 [submodule "lib/forge-std"]
 	path = lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
