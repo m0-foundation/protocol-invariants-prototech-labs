@@ -1148,7 +1148,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
         uint256 _amount
     ) external resetErrors leap(_actorIndex) useRandomMsgSenderWeighted(_actorIndex, _minterGateway.addr, 75) {
         InvariantUtils.Actor memory recipient = actors[bound(_recipientIndex, 0, actors.length - 1)];
-        // TODO: once issue 88 is resolved we can switch back to this bound
+        // TODO: once Finding 8.1 is resolved we can switch back to this bound
         // _amount = bound(_amount, 0, MAX_UINT240);
         _amount = bound(_amount, 0, MAX_UINT112/2);
 
