@@ -258,7 +258,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             addExpectedError("VoteEpoch()");
         }
 
-        // TODO remove if Issue #70 is resolved
+        // TODO remove if Finding 7.1 is resolved
         if (delegatee.addr == address(0)) {
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }
@@ -328,7 +328,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             addExpectedError("VoteEpoch()");
         }
 
-        // TODO remove if Issue #70 is resolved
+        // TODO remove if Finding 7.1 is resolved
         if (delegatee.addr == address(0) ||
             delegatee.addr == address(powerToken)) {
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
@@ -373,7 +373,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }
 
-        //  TODO remove if Issue #70 is resolved
+        //  TODO remove if Finding 7.1 is resolved
         if (delegatee.addr == address(0)) {
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }

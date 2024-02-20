@@ -97,7 +97,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         InvariantUtils.Actor memory recipient = actors[bound(_recipientIndex, 0, actors.length - 1)];
         _amount = bound(_amount, 0, zeroToken.balanceOf(actor.addr));
         if (recipient.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
@@ -124,7 +124,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         uint256 beforeAllowance = zeroToken.allowance(from.addr, actor.addr);
 
         if (to.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
@@ -180,7 +180,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _nonce = bound(_nonce, 0, MAX_NONCE);
 
         if (to.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
@@ -279,7 +279,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _nonce = bound(_nonce, 0, MAX_NONCE);
 
         if (to.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
@@ -382,7 +382,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _nonce = bound(_nonce, 0, MAX_NONCE);
 
         if (to.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
@@ -487,7 +487,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _nonce = bound(_nonce, 0, MAX_NONCE);
 
         if (to.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
@@ -587,7 +587,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _nonce = bound(_nonce, 0, MAX_NONCE);
 
         if (to.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
@@ -691,7 +691,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _nonce = bound(_nonce, 0, MAX_NONCE);
 
         if (to.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
@@ -1093,7 +1093,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _amount = bound(_amount, 0, MAX_UINT240);
 
         if (recipient.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
@@ -1133,7 +1133,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         );
 
         if (delegatee.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
@@ -1197,7 +1197,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         );
 
         if (delegatee.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
@@ -1256,7 +1256,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         InvariantUtils.Actor memory delegatee = actors[bound(_delegatee, 0, actors.length - 1)];
 
         if (delegatee.addr == address(0)) {
-            // TODO SKIP for Issue #70
+            // TODO SKIP for Finding 7.1
             return;
         }
 
