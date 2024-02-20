@@ -512,7 +512,7 @@ contract MinterGatewayHandler is BaseHandler {
             } catch {
             }
 
-            // Related to Issue #88
+            // Related to Finding 8.1
             if (_willOverflowMTokenMint(actor.addr, amount)) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             // Can potentially still be undercollateralized due to expiring collateral
             if(_isUndercollateralizedMToken(actor.addr, amount) > 0) addExpectedError("Undercollateralized(uint256,uint256)");
