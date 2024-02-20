@@ -167,7 +167,7 @@ contract MinterGatewayInvariants is BaseInvariants, BaseMZeroInvariants {
             // collateralOf is 0 if the collateral has not been updated in time
             // so we look into the storage slot for MinterState.collateral for this invariant
             collateral += _minterGatewayHandler.rawCollateralOf(actor.addr);
-            // Issue #80, it is not guaranteed that collateral > pendingRetrievals currently
+            // Finding 10.3, it is not guaranteed that collateral > pendingRetrievals currently
             // collateral -= minterGateway.totalPendingCollateralRetrievalOf(actor.addr);
         }
 
@@ -238,7 +238,7 @@ contract MinterGatewayInvariants is BaseInvariants, BaseMZeroInvariants {
             InvariantUtils.Actor memory actor;
             (actor.addr, actor.key) = _minterGatewayHandler.actors(i);
             if (minterGateway.isDeactivatedMinter(actor.addr)) {
-                // TODO INVARIANT VIOLATION SKIP for Issue #69
+                // TODO INVARIANT VIOLATION SKIP for Finding 10.7
                 continue;
             }
             uint256 pendingRetrievals;
@@ -270,7 +270,7 @@ contract MinterGatewayInvariants is BaseInvariants, BaseMZeroInvariants {
                 );
             } else {
                 uint256 pendingRetrievals = minterGateway.totalPendingCollateralRetrievalOf(actor.addr);
-                // because of Issue #80, pendingRetrievals could be greater than rawCollateral
+                // because of Finding 10.3, pendingRetrievals could be greater than rawCollateral
                 rawCollateral = (pendingRetrievals > rawCollateral ? 0 : rawCollateral - pendingRetrievals);
                 require(
                     rawCollateral == collateralOf,
@@ -322,7 +322,7 @@ contract MinterGatewayInvariants is BaseInvariants, BaseMZeroInvariants {
 
     // totalPendingRetrievals should not be greater than rawCollateral for an actor
     // totalRawCollateal >= totalPendingRetrievals
-    // Issue #80, it is not guaranteed that collateral > pendingRetrievals currently
+    // Finding 10.3, it is not guaranteed that collateral > pendingRetrievals currently
     // Unless this is change, this Invariant is not valid.
     // function invariant_MG_B#() public leap {
     //     uint256 actorCount = _minterGatewayHandler.getActorsCount();
@@ -347,7 +347,6 @@ contract MinterGatewayInvariants is BaseInvariants, BaseMZeroInvariants {
     // }
 
     // sum of active Minter's rawOwedM should equal principalOfTotalActiveOwedM
-    // See Issue #123 for more details
     function invariant_MG_B9() public leap {
         uint256 actorCount = _minterGatewayHandler.getActorsCount();
         uint256 totalActiveMinterM;

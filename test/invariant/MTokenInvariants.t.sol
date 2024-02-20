@@ -288,5 +288,5 @@ contract MTokenInvariants is BaseInvariants, BaseMZeroInvariants {
         );
     }
 
-    // TODO: add address(0) invariant checks if issue 64 requires changes
+    // TODO: add address(0) invariant checks if Finding 10.8 requires changes
 }

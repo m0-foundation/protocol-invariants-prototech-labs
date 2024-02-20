@@ -31,7 +31,7 @@ contract ZeroTokenRegressionTests is ZeroTokenInvariants {
         _zeroTokenHandler.setMaxLeap(maxLeap);
     }
 
-    // TODO: keep this regression around until issue 70 is resolved and re-tested
+    // TODO: keep this regression around until Finding 7.1 is resolved and re-tested
     // may need git checkout 55e82fb481695ad91b9afbbea1248ca161b548a5 to reproduce
     function test_regression_invariant_ZT_P1_dcc5c365_failure() external {
         console.log("zero address votes: ", zeroToken.getVotes(address(0)));

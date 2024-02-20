@@ -285,10 +285,10 @@ contract MinterGatewayHandler is BaseHandler {
             stopGas();
             // success
             // updateCollateral replaces not adds to the collateral
-            // Issue #80, removing pendingRetrievals from the collateralTotal because it is not guaranteed
+            // Finding 10.3, removing pendingRetrievals from the collateralTotal because it is not guaranteed
             // collateral >= pendingRetrievals
             collateralTotal -= preUpdateCollateralValues.collateral /* - preUpdateCollateralValues.pendingRetrievals*/;
-            // Issue #80, collateralOf excludes pendingRetrievals, so have to use the new _collateral value here
+            // Finding 10.3, collateralOf excludes pendingRetrievals, so have to use the new _collateral value here
             // collateralTotal += minterGateway.collateralOf(actor.addr);
             collateralTotal += _collateral;
             if (retrievalIds.length > 0) {
@@ -347,7 +347,7 @@ contract MinterGatewayHandler is BaseHandler {
         try minterGateway.proposeRetrieval(_collateral) returns(uint48 retreivalId) {
             stopGas();
             // success
-            // Issue #80, no longer subtracting pendingRetrievals from collateralTotal
+            // Finding 10.3, no longer subtracting pendingRetrievals from collateralTotal
             // because it is not guaranteed that collateral >= pendingRetrievals
             // collateralTotal -= _collateral;
             pendingRetrievalsTotal += _collateral;
@@ -462,7 +462,7 @@ contract MinterGatewayHandler is BaseHandler {
         if (happyPath) {
             // setup and use a valid minter 1/3 of the time (deactivated minters can't be recovered)
             etchLeap();
-            // See Issue #77 for why we need to do this bounding
+            // See Finding 10.4 for why we need to do this bounding
             amount = uint240(bound(rand(), 0, type(uint112).max));
             proposeMint(_actorIndex, amount, rand());
             etchLeap();
@@ -512,7 +512,7 @@ contract MinterGatewayHandler is BaseHandler {
             } catch {
             }
 
-            // Related to Issue #88
+            // Related to Finding 8.1
             if (_willOverflowMTokenMint(actor.addr, amount)) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             // Can potentially still be undercollateralized due to expiring collateral
             if(_isUndercollateralizedMToken(actor.addr, amount) > 0) addExpectedError("Undercollateralized(uint256,uint256)");
@@ -642,7 +642,7 @@ contract MinterGatewayHandler is BaseHandler {
       resetHappyPath
     {
         address _minter = actors[bound(_minterIndex, 0, actors.length - 1)].addr;
-        // no local conditions for happy path (see Issue #84)
+        // no local conditions for happy path (see Finding 11.3)
         if (_embarkOnHappyPath(true)) {
             // approve minter
             approveMinter(_actorIndex, _minterIndex);
@@ -706,7 +706,7 @@ contract MinterGatewayHandler is BaseHandler {
         ) {
             stopGas();
             // success
-            // Issue #80, removing totalPendingRetrievals from the collateralTotal because it is not guaranteed
+            // Finding 10.3, removing totalPendingRetrievals from the collateralTotal because it is not guaranteed
             // collateral >= totalPendingRetrievals
             collateralTotal -= collateral /* - totalPendingRetrievals */;
             pendingRetrievalsTotal -= totalPendingRetrievals;
@@ -845,7 +845,7 @@ contract MinterGatewayHandler is BaseHandler {
         uint32  _ratio
     ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
         // setting a min ratio of 1 to avoid divide by 0 errors in our _isUndercollateralizedBy function
-        // ref: Issue #73, Issue #90
+        // ref: Finding 10.6, Finding 9.1
         uint256 ratio = bound(_ratio, 1, 10_000);
         // can be set to anything but MinterGateway caps at 10_000% (100 * uint32(10_000))
         if (testContract.realRegistrar()) {
