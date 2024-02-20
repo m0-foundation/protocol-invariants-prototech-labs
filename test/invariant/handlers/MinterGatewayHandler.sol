@@ -462,7 +462,7 @@ contract MinterGatewayHandler is BaseHandler {
         if (happyPath) {
             // setup and use a valid minter 1/3 of the time (deactivated minters can't be recovered)
             etchLeap();
-            // See Issue #77 for why we need to do this bounding
+            // See Finding 10.4 for why we need to do this bounding
             amount = uint240(bound(rand(), 0, type(uint112).max));
             proposeMint(_actorIndex, amount, rand());
             etchLeap();
