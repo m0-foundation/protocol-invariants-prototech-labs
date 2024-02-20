@@ -642,7 +642,7 @@ contract MinterGatewayHandler is BaseHandler {
       resetHappyPath
     {
         address _minter = actors[bound(_minterIndex, 0, actors.length - 1)].addr;
-        // no local conditions for happy path (see Issue #84)
+        // no local conditions for happy path (see Finding 11.3)
         if (_embarkOnHappyPath(true)) {
             // approve minter
             approveMinter(_actorIndex, _minterIndex);
