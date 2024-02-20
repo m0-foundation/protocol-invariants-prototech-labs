@@ -39,21 +39,6 @@ contract TTGRegressionTests is TTGInvariants {
         _registrarHandler.setMaxLeap(maxLeap);
     }
 
-    // TODO: we need to re-enable these tests once the issue is resolved in
-    // BatchGovernorHandler.  For now, this is squelched with:
-    // addExpectedError("NotPastTimepoint(uint48,uint48)");
-    // function test_regression_invariant_DV_B1_f8a6cc61_failure() external {
-    //     _standardGovernorHandler.setMaxLeap(3600);
-    //     _distributionVaultHandler.claim(115792089237316195423570985008687907853269984665640564039457584007913129639935, 246728611478136088800327302358230127, 115792089237316195423570985008687907853269984665640564039457584007913129639935, 1);
-    //     _powerTokenHandler.approve(3, 3, 115792089237316195423570985008687907853269984665640564039457584007913129639933);
-    //     _distributionVaultHandler.distribute(15162, 3825);
-    //     _powerTokenHandler.setNextCashToken(7251839516968295198182705805467140488838636843, 0);
-    //     _standardGovernorHandler.castVoteWithReason(208, 23262, 116);
-
-    //     invariant_DV_B1();
-    // }
-
-
     // // =========== Further Exploration Required ===========
 
     // function test_regression_invariant_P_B1_c789f613_failure() external {
