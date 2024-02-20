@@ -240,7 +240,7 @@ abstract contract RegistrarGovernorHandler is ThresholdGovernorHandler {
         } else if (key == "mint_ttl") {
             value = bound(value, 1, 10 * 365 days);
         } else if (key == "mint_ratio") {
-            // See Issue #73
+            // See Finding 10.6
             value = bound(value, 1, 10_000);
         } else if (key == "updateCollateral_interval") {
             if (rand() % 100 < 50) {

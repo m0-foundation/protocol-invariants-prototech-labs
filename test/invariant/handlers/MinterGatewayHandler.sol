@@ -845,7 +845,7 @@ contract MinterGatewayHandler is BaseHandler {
         uint32  _ratio
     ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
         // setting a min ratio of 1 to avoid divide by 0 errors in our _isUndercollateralizedBy function
-        // ref: Issue #73, Issue #90
+        // ref: Finding 10.6, Issue #90
         uint256 ratio = bound(_ratio, 1, 10_000);
         // can be set to anything but MinterGateway caps at 10_000% (100 * uint32(10_000))
         if (testContract.realRegistrar()) {
