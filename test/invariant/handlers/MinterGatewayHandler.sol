@@ -285,10 +285,10 @@ contract MinterGatewayHandler is BaseHandler {
             stopGas();
             // success
             // updateCollateral replaces not adds to the collateral
-            // Issue #80, removing pendingRetrievals from the collateralTotal because it is not guaranteed
+            // Finding 10.3, removing pendingRetrievals from the collateralTotal because it is not guaranteed
             // collateral >= pendingRetrievals
             collateralTotal -= preUpdateCollateralValues.collateral /* - preUpdateCollateralValues.pendingRetrievals*/;
-            // Issue #80, collateralOf excludes pendingRetrievals, so have to use the new _collateral value here
+            // Finding 10.3, collateralOf excludes pendingRetrievals, so have to use the new _collateral value here
             // collateralTotal += minterGateway.collateralOf(actor.addr);
             collateralTotal += _collateral;
             if (retrievalIds.length > 0) {
@@ -347,7 +347,7 @@ contract MinterGatewayHandler is BaseHandler {
         try minterGateway.proposeRetrieval(_collateral) returns(uint48 retreivalId) {
             stopGas();
             // success
-            // Issue #80, no longer subtracting pendingRetrievals from collateralTotal
+            // Finding 10.3, no longer subtracting pendingRetrievals from collateralTotal
             // because it is not guaranteed that collateral >= pendingRetrievals
             // collateralTotal -= _collateral;
             pendingRetrievalsTotal += _collateral;
@@ -706,7 +706,7 @@ contract MinterGatewayHandler is BaseHandler {
         ) {
             stopGas();
             // success
-            // Issue #80, removing totalPendingRetrievals from the collateralTotal because it is not guaranteed
+            // Finding 10.3, removing totalPendingRetrievals from the collateralTotal because it is not guaranteed
             // collateral >= totalPendingRetrievals
             collateralTotal -= collateral /* - totalPendingRetrievals */;
             pendingRetrievalsTotal -= totalPendingRetrievals;

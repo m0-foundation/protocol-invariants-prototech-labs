@@ -54,7 +54,7 @@ contract MinterGatewayRegressionTests is MinterGatewayInvariants {
         _minterGatewayHandler.updateCollateral(198571843959024771361160079894863967054889216, 115792089237316195423570985008687907853269984665640564039457584007913129639934);
         _minterGatewayHandler.proposeMint(2, 0, 795241873597757511877289020032563093300687682375750941727894485);
 
-        // Invariant B8 is not valid as long as Issue #80 is unresolved
+        // Invariant B8 is not valid as long as Finding 10.3 is unresolved
         // invariant_MG_B8();
     }
     ///////////////////////// End Valid regressions ///////////////////////////
