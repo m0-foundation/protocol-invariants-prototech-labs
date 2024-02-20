@@ -347,7 +347,6 @@ contract MinterGatewayInvariants is BaseInvariants, BaseMZeroInvariants {
     // }
 
     // sum of active Minter's rawOwedM should equal principalOfTotalActiveOwedM
-    // See Issue #123 for more details
     function invariant_MG_B9() public leap {
         uint256 actorCount = _minterGatewayHandler.getActorsCount();
         uint256 totalActiveMinterM;
