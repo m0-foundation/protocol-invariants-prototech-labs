@@ -122,7 +122,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         }
 
         startGas();
-        try powerToken.buy(_minAmount, _maxAmount, _dest.addr) {
+        try powerToken.buy(_minAmount, _maxAmount, _dest.addr, uint16(clock())) {
             stopGas();
 
             if (isVotingEpoch()) {
