@@ -369,7 +369,6 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
 
         if (powerToken.getVotes(actor.addr) == 0) {
             // If actor's votes are 0, the call reverts with a Panic overflow
-            // See https://github.com/Prototech-Labs/mzero-invariants/issues/89
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }
 
@@ -456,8 +455,6 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             maxAllowance = true;
         }
 
-        // TODO: Fix this to occasionally bound higher than uint240
-        //       https://github.com/Prototech-Labs/mzero-invariants/issues/38
         _amount = bound(
             _amount,
             0,
@@ -474,14 +471,12 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             addExpectedError("VoteEpoch()");
         }
 
-        //  Consider a named error for insufficient allowance
-        //       https://github.com/Prototech-Labs/mzero-invariants/issues/92
+        // Finding 11.2: Consider a named error for insufficient allowance
         if (powerToken.allowance(from.addr, actor.addr) < _amount) {
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }
 
-        // TODO: Consider a named error for insufficient balance
-        //      https://github.com/Prototech-Labs/mzero-invariants/issues/102
+        // Finding 11.1: Consider a named error for insufficient balance
         if (powerToken.balanceOf(from.addr) < _amount) {
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }
