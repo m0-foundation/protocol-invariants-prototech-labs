@@ -31,7 +31,7 @@ contract MinterGatewayRegressionTests is MinterGatewayInvariants {
     }
 
     ///////////////////////// Begin Valid regressions /////////////////////////
-    // Regression for Issue #69
+    // Regression for Finding 10.7
     function test_regression_invariant_MG_B5_ada5cb6a_failure() external {
         _setMaxLeap(43200);
         _minterGatewayHandler.proposeMint(7539, 2778438198, 447);

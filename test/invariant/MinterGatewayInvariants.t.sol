@@ -238,7 +238,7 @@ contract MinterGatewayInvariants is BaseInvariants, BaseMZeroInvariants {
             InvariantUtils.Actor memory actor;
             (actor.addr, actor.key) = _minterGatewayHandler.actors(i);
             if (minterGateway.isDeactivatedMinter(actor.addr)) {
-                // TODO INVARIANT VIOLATION SKIP for Issue #69
+                // TODO INVARIANT VIOLATION SKIP for Finding 10.7
                 continue;
             }
             uint256 pendingRetrievals;
