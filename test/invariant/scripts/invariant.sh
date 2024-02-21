@@ -69,7 +69,7 @@ if [ -n "$mt" ]; then
 fi
 
 if [ -z "$seed" ]; then
-    seed=$(shuf -i 1-18446744073709551615 -n 1)
+    seed=$(python3 -c "import random; print(random.randint(1, 18446744073709551615))")
 fi
 
 seedstr="--fuzz-seed $seed"
