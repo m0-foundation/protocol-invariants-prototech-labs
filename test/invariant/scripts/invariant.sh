@@ -92,6 +92,7 @@ runfile="./logs/$(date +%Y%m%d%H%M%S)-invariant-${seed}.log"
 if [ "$type" == "invariant" ]; then
     nmcstr="--nmc RegressionTests"
     mkdir -p ./out
+    mkdir -p ./logs
     output=$(echo "$test_data"; forge test $mtstr $nmcstr $vstr $mcstr $seedstr;)
     echo "$output" | tee ./out/sequence.log
     # Strip ANSI color codes for the condition check
