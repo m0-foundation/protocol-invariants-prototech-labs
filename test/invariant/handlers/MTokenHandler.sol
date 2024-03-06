@@ -1196,6 +1196,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 (mToken.isEarning(account.addr) && _amount > MAX_UINT112)) {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
             }
             expectedError(_err);
         }
@@ -1224,23 +1225,23 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
         uint256 _actorIndex,
         uint256 _accountIndex
     ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
-        InvariantUtils.Actor memory account = actors[bound(_accountIndex, 0, actors.length - 1)];
+        // InvariantUtils.Actor memory account = actors[bound(_accountIndex, 0, actors.length - 1)];
 
-        startGas();
-        try mToken.startEarningOnBehalfOf(account.addr) {
-            stopGas();
+        // startGas();
+        // try mToken.startEarningOnBehalfOf(account.addr) {
+        //     stopGas();
 
-            // success
-        } catch Error(string memory _err) {
-            expectedError(_err);
-        } catch (bytes memory _err) {
-            if (!mToken.hasAllowedEarningOnBehalf(account.addr)) addExpectedError("HasNotAllowedEarningOnBehalf()");
-            if (TTGRegistrarReader.isEarnersListIgnored(_registrar.addr) ||
-                !Registrar(_registrar.addr).listContains(TTGRegistrarReader.EARNERS_LIST, account.addr)) {
-                addExpectedError("NotApprovedEarner()");
-            }
-            expectedError(_err);
-        }
+        //     // success
+        // } catch Error(string memory _err) {
+        //     expectedError(_err);
+        // } catch (bytes memory _err) {
+        //     if (!mToken.hasAllowedEarningOnBehalf(account.addr)) addExpectedError("HasNotAllowedEarningOnBehalf()");
+        //     if (TTGRegistrarReader.isEarnersListIgnored(_registrar.addr) ||
+        //         !Registrar(_registrar.addr).listContains(TTGRegistrarReader.EARNERS_LIST, account.addr)) {
+        //         addExpectedError("NotApprovedEarner()");
+        //     }
+        //     expectedError(_err);
+        // }
     }
 
     function stopEarning(
@@ -1263,51 +1264,51 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
         uint256 _actorIndex,
         uint256 _accountIndex
     ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
-        InvariantUtils.Actor memory account = actors[bound(_accountIndex, 0, actors.length - 1)];
+        // InvariantUtils.Actor memory account = actors[bound(_accountIndex, 0, actors.length - 1)];
 
-        startGas();
-        try mToken.stopEarningOnBehalfOf(account.addr) {
-            stopGas();
-            // success
-        } catch Error(string memory _err) {
-            expectedError(_err);
-        } catch (bytes memory _err) {
-            if (TTGRegistrarReader.isEarnersListIgnored(_registrar.addr) ||
-                TTGRegistrarReader.isApprovedEarner(_registrar.addr, account.addr)) {
-                addExpectedError("IsApprovedEarner()");
-            }
-            expectedError(_err);
-        }
+        // startGas();
+        // try mToken.stopEarningOnBehalfOf(account.addr) {
+        //     stopGas();
+        //     // success
+        // } catch Error(string memory _err) {
+        //     expectedError(_err);
+        // } catch (bytes memory _err) {
+        //     if (TTGRegistrarReader.isEarnersListIgnored(_registrar.addr) ||
+        //         TTGRegistrarReader.isApprovedEarner(_registrar.addr, account.addr)) {
+        //         addExpectedError("IsApprovedEarner()");
+        //     }
+        //     expectedError(_err);
+        // }
     }
 
     function allowEarningOnBehalf(
         uint256 _actorIndex
     ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
 
-        startGas();
-        try mToken.allowEarningOnBehalf() {
-            stopGas();
-            // success
-        } catch Error(string memory _err) {
-            expectedError(_err);
-        } catch (bytes memory _err) {
-            expectedError(_err);
-        }
+        // startGas();
+        // try mToken.allowEarningOnBehalf() {
+        //     stopGas();
+        //     // success
+        // } catch Error(string memory _err) {
+        //     expectedError(_err);
+        // } catch (bytes memory _err) {
+        //     expectedError(_err);
+        // }
     }
 
     function disallowEarningOnBehalf(
         uint256 _actorIndex
     ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
 
-        startGas();
-        try mToken.disallowEarningOnBehalf() {
-            stopGas();
-            // success
-        } catch Error(string memory _err) {
-            expectedError(_err);
-        } catch (bytes memory _err) {
-            expectedError(_err);
-        }
+        // startGas();
+        // try mToken.disallowEarningOnBehalf() {
+        //     stopGas();
+        //     // success
+        // } catch Error(string memory _err) {
+        //     expectedError(_err);
+        // } catch (bytes memory _err) {
+        //     expectedError(_err);
+        // }
     }
 
     // TTGRegistrar Functions

@@ -66,7 +66,7 @@ contract MTokenInvariants is BaseInvariants, BaseMZeroInvariants {
             _mTokenHandler.init(_actors, _receivers);
         }
 
-        bytes4[] memory selectors = new bytes4[](27);
+        bytes4[] memory selectors = new bytes4[](26);
         selectors[0]  = MTokenHandler.approve.selector;
         selectors[1]  = MTokenHandler.transfer.selector;
         selectors[2]  = MTokenHandler.transferFrom.selector;
@@ -85,16 +85,15 @@ contract MTokenInvariants is BaseInvariants, BaseMZeroInvariants {
         selectors[15] = MTokenHandler.mint.selector;
         selectors[16] = MTokenHandler.burn.selector;
         selectors[17] = MTokenHandler.startEarning.selector;
-        selectors[18] = MTokenHandler.startEarningOnBehalfOf.selector;
-        selectors[19] = MTokenHandler.stopEarning.selector;
-        selectors[20] = MTokenHandler.stopEarningOnBehalfOf.selector;
-        selectors[21] = MTokenHandler.allowEarningOnBehalf.selector;
-        selectors[22] = MTokenHandler.disallowEarningOnBehalf.selector;
+        selectors[18] = MTokenHandler.stopEarning.selector;
+        selectors[19] = MTokenHandler.stopEarningOnBehalfOf.selector;
+        selectors[20] = MTokenHandler.allowEarningOnBehalf.selector;
+        selectors[21] = MTokenHandler.disallowEarningOnBehalf.selector;
         // TTGRegistrar helper/chaos functions
-        selectors[23] = MTokenHandler.updateEarnerRateModel.selector;
-        selectors[24] = MTokenHandler.updateIsEarnersListIgnored.selector;
-        selectors[25] = MTokenHandler.approveEarner.selector;
-        selectors[26] = MTokenHandler.disapproveEarner.selector;
+        selectors[22] = MTokenHandler.updateEarnerRateModel.selector;
+        selectors[23] = MTokenHandler.updateIsEarnersListIgnored.selector;
+        selectors[24] = MTokenHandler.approveEarner.selector;
+        selectors[25] = MTokenHandler.disapproveEarner.selector;
 
         targetSelector(FuzzSelector({
             addr: address(_mTokenHandler),

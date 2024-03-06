@@ -25,7 +25,6 @@ import "../../../lib/protocol/src/libs/TTGRegistrarReader.sol";
 import "../../../lib/protocol/src/libs/ContinuousIndexingMath.sol";
 
 import "../../../lib/protocol/src/rateModels/MinterRateModel.sol";
-import "../../../lib/protocol/src/rateModels/SplitEarnerRateModel.sol";
 import "../../../lib/protocol/src/rateModels/StableEarnerRateModel.sol";
 
 // importing everything except the forge imports from DeployBase so we don't get conflicts

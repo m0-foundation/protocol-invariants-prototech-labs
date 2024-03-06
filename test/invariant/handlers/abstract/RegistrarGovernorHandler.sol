@@ -21,7 +21,7 @@ pragma solidity ^0.8.23;
 
 import "./ThresholdGovernorHandler.sol";
 
-import { MinterRateModel, SplitEarnerRateModel, StableEarnerRateModel } from "../../lib/Protocol.sol";
+import { MinterRateModel, StableEarnerRateModel } from "../../lib/Protocol.sol";
 
 interface IRegistrarGovernor {
     function addToList(bytes32 list, address account) external;
@@ -84,7 +84,7 @@ abstract contract RegistrarGovernorHandler is ThresholdGovernorHandler {
     function _initRateModels(address registrar, address minterGateway) public {
         rateModels[0] = address(new MinterRateModel(registrar));
         rateModels[1] = address(new MinterRateModel(registrar));
-        rateModels[2] = address(new SplitEarnerRateModel(minterGateway));
+        rateModels[2] = address(new StableEarnerRateModel(minterGateway));
         rateModels[3] = address(new StableEarnerRateModel(minterGateway));
     }
 
