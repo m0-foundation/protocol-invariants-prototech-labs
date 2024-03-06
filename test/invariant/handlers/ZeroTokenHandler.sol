@@ -96,10 +96,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
     ) external resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
         InvariantUtils.Actor memory recipient = actors[bound(_recipientIndex, 0, actors.length - 1)];
         _amount = bound(_amount, 0, zeroToken.balanceOf(actor.addr));
-        if (recipient.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
 
         startGas();
         try zeroToken.transfer(recipient.addr, _amount) {
@@ -122,11 +118,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         InvariantUtils.Actor memory to = actors[bound(_toIndex, 0, actors.length - 1)];
         InvariantUtils.Actor memory from = actors[bound(_fromIndex, 0, actors.length - 1)];
         uint256 beforeAllowance = zeroToken.allowance(from.addr, actor.addr);
-
-        if (to.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
 
         if (beforeAllowance == type(uint256).max) {
             maxAllowance = true;
@@ -179,11 +170,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _validBefore = bound(_validBefore, _validAfter, block.timestamp * 2);
         _nonce = bound(_nonce, 0, MAX_NONCE);
 
-        if (to.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
-
         // get a snapshot of allowance values
         snapAllowanceValues(IToken(address(zeroToken)));
 
@@ -252,6 +238,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             if (block.timestamp <= _validAfter) addExpectedError("AuthorizationNotYetValid(uint256,uint256)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -278,11 +265,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _validBefore = bound(_validBefore, _validAfter, block.timestamp * 2);
         _nonce = bound(_nonce, 0, MAX_NONCE);
 
-        if (to.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
-
         // get a snapshot of allowance values
         snapAllowanceValues(IToken(address(zeroToken)));
 
@@ -355,6 +337,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             if (block.timestamp <= _validAfter) addExpectedError("AuthorizationNotYetValid(uint256,uint256)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -380,11 +363,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _validAfter = bound(_validAfter, 0, block.timestamp * 2);
         _validBefore = bound(_validBefore, _validAfter, block.timestamp * 2);
         _nonce = bound(_nonce, 0, MAX_NONCE);
-
-        if (to.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
 
         // get a snapshot of allowance values
         snapAllowanceValues(IToken(address(zeroToken)));
@@ -460,6 +438,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             if (block.timestamp <= _validAfter) addExpectedError("AuthorizationNotYetValid(uint256,uint256)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -485,11 +464,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _validAfter = bound(_validAfter, 0, block.timestamp * 2);
         _validBefore = bound(_validBefore, _validAfter, block.timestamp * 2);
         _nonce = bound(_nonce, 0, MAX_NONCE);
-
-        if (to.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
 
         // get a snapshot of allowance values
         snapAllowanceValues(IToken(address(zeroToken)));
@@ -560,6 +534,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             if (actor.addr != to.addr) addExpectedError("CallerMustBePayee(address,address)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -585,11 +560,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _validAfter = bound(_validAfter, 0, block.timestamp * 2);
         _validBefore = bound(_validBefore, _validAfter, block.timestamp * 2);
         _nonce = bound(_nonce, 0, MAX_NONCE);
-
-        if (to.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
 
         // get a snapshot of allowance values
         snapAllowanceValues(IToken(address(zeroToken)));
@@ -664,6 +634,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             if (actor.addr != to.addr) addExpectedError("CallerMustBePayee(address,address)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -689,11 +660,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         _validAfter = bound(_validAfter, 0, block.timestamp * 2);
         _validBefore = bound(_validBefore, _validAfter, block.timestamp * 2);
         _nonce = bound(_nonce, 0, MAX_NONCE);
-
-        if (to.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
 
         // get a snapshot of allowance values
         snapAllowanceValues(IToken(address(zeroToken)));
@@ -770,6 +736,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             if (actor.addr != to.addr) addExpectedError("CallerMustBePayee(address,address)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -827,6 +794,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             }
             if (authorizer.addr != InvariantUtils.GetAddress(authorizer.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -885,6 +853,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             }
             if (authorizer.addr != InvariantUtils.GetAddress(authorizer.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -945,6 +914,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             }
             if (authorizer.addr != InvariantUtils.GetAddress(authorizer.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -1008,6 +978,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 _nonce != zeroToken.nonces(from.addr) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -1076,6 +1047,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 _nonce != zeroToken.nonces(from.addr) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -1091,11 +1063,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
     ) public resetErrors leap(_actorIndex) useRandomMsgSenderWeighted(_actorIndex, zeroToken.standardGovernor(), 75) {
         InvariantUtils.Actor memory recipient = actors[bound(_recipientIndex, 0, actors.length - 1)];
         _amount = bound(_amount, 0, MAX_UINT240);
-
-        if (recipient.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
 
         startGas();
         try zeroToken.mint(recipient.addr, _amount) {
@@ -1132,11 +1099,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             zeroToken.nonces(signer.addr) + 1
         );
 
-        if (delegatee.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
-
         { // fix stack too deep
             bytes32 digest = InvariantUtils.GetDelegateDigest(
                 IToken(address(zeroToken)),
@@ -1171,9 +1133,10 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             if (signer.addr != InvariantUtils.GetAddress(signer.key) ||
                 _nonce != zeroToken.nonces(signer.addr) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
-                addExpectedError("ReusedNonce(uint256,uint256)");
+                addExpectedError("InvalidAccountNonce(uint256,uint256)");
             }
             if (block.timestamp > _expiry) addExpectedError("SignatureExpired(uint256,uint256)");
             expectedError(_err);
@@ -1195,11 +1158,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             (zeroToken.nonces(signer.addr) > 0) ? zeroToken.nonces(signer.addr) - 1 : 0,
             zeroToken.nonces(signer.addr) + 1
         );
-
-        if (delegatee.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
 
         { // fix stack too deep
             bytes32 digest = InvariantUtils.GetDelegateDigest(
@@ -1240,9 +1198,10 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             if (signer.addr != InvariantUtils.GetAddress(signer.key) ||
                 _nonce != zeroToken.nonces(signer.addr) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
-                addExpectedError("ReusedNonce(uint256,uint256)");
+                addExpectedError("InvalidAccountNonce(uint256,uint256)");
             }
             if (block.timestamp > _expiry) addExpectedError("SignatureExpired(uint256,uint256)");
             expectedError(_err);
@@ -1254,11 +1213,6 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         uint256 _delegatee
     ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
         InvariantUtils.Actor memory delegatee = actors[bound(_delegatee, 0, actors.length - 1)];
-
-        if (delegatee.addr == address(0)) {
-            // TODO SKIP for Finding 7.1
-            return;
-        }
 
         startGas();
         try zeroToken.delegate(delegatee.addr) {

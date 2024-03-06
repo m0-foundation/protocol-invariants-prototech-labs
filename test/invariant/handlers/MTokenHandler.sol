@@ -304,6 +304,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (block.timestamp <= _validAfter) addExpectedError("AuthorizationNotYetValid(uint256,uint256)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -409,6 +410,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (block.timestamp <= _validAfter) addExpectedError("AuthorizationNotYetValid(uint256,uint256)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -517,6 +519,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (block.timestamp <= _validAfter) addExpectedError("AuthorizationNotYetValid(uint256,uint256)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -619,6 +622,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (actor.addr != to.addr) addExpectedError("CallerMustBePayee(address,address)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -723,6 +727,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (actor.addr != to.addr) addExpectedError("CallerMustBePayee(address,address)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -828,6 +833,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (actor.addr != to.addr) addExpectedError("CallerMustBePayee(address,address)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -889,6 +895,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             }
             if (authorizer.addr != InvariantUtils.GetAddress(authorizer.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -947,6 +954,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             }
             if (authorizer.addr != InvariantUtils.GetAddress(authorizer.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -1006,6 +1014,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             }
             if (authorizer.addr != InvariantUtils.GetAddress(authorizer.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -1068,6 +1077,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 _nonce != mToken.nonces(from.addr) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -1182,6 +1192,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if ((mToken.isEarning(recipient.addr) && MAX_UINT112 < mToken.balanceOf(recipient.addr) + _amount) ||
                  MAX_UINT112 < mToken.totalSupply() + _amount
                 ){
+                addExpectedError("OverflowsPrincipalOfTotalSupply()");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
             }

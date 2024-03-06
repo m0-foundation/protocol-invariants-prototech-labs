@@ -50,8 +50,6 @@ contract ZeroTokenInvariants is BaseInvariants, BaseMZeroInvariants {
             // zero actor
             (guy.addr, guy.key) = makeAddrAndKey("zero");
             guy.addr = address(0);
-            _initialZeroAccounts.push(guy.addr);
-            _initialZeroBalances.push(0);
             _receivers.push(guy);
 
             // deployer
@@ -71,7 +69,7 @@ contract ZeroTokenInvariants is BaseInvariants, BaseMZeroInvariants {
             );
             deployer.addr = address(_deployer);
             _initialZeroAccounts.push(deployer.addr);
-            _initialZeroBalances.push(0);
+            _initialZeroBalances.push(1e12);
             _actors.push(deployer);
             _receivers.push(deployer);
 

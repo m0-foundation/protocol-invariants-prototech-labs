@@ -52,17 +52,13 @@ contract MZeroInvariants is
 
         // deployer actor
         _initialPowerAccounts.push(deployer.addr);
-        _initialPowerBalances.push(0);
+        _initialPowerBalances.push(1e12);
         _initialZeroAccounts.push(deployer.addr);
-        _initialZeroBalances.push(0);
+        _initialZeroBalances.push(1e12);
         _actors.push(deployer);
         _receivers.push(deployer);
 
         // zero actor
-        _initialPowerAccounts.push(_zero.addr);
-        _initialPowerBalances.push(0);
-        _initialZeroAccounts.push(_zero.addr);
-        _initialZeroBalances.push(0);
         _receivers.push(_zero);
 
         // flag to the other modules that we're running in integration mode

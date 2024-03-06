@@ -272,7 +272,7 @@ contract MinterGatewayHandler is BaseHandler {
                                 );
             }
         }
-}
+
         startGas();
         try minterGateway.updateCollateral(
             _collateral,
@@ -320,7 +320,7 @@ contract MinterGatewayHandler is BaseHandler {
             if (!happyPath) {
                 if (!(minterGateway.isActiveMinter(actor.addr)))  addExpectedError("InactiveMinter()");
                 if (_collateral > uint256(type(uint112).max))   addExpectedError("InvalidUInt112()");
-                if (_collateral > uint256(type(uint240).max))    addExpectedError("InvalidUInt240()");
+                if (_collateral > uint256(type(uint240).max))   addExpectedError("InvalidUInt240()");
                 if (!(validators.length == timestamps.length && timestamps.length == signatures.length)) addExpectedError("SignatureArrayLengthsMismatch()");
 
                 for (uint256 i = 0; i < validators.length; i++) {
