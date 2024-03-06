@@ -66,7 +66,7 @@ contract MinterGatewaySignatureBuilder {
                         minterGateway.UPDATE_COLLATERAL_TYPEHASH(),
                         minter_,
                         collateral_,
-                        retrievalIds_,
+                        keccak256(abi.encodePacked(retrievalIds_)),
                         metadataHash_,
                         timestamp_
                     )
