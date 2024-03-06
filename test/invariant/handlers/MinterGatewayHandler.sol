@@ -272,7 +272,7 @@ contract MinterGatewayHandler is BaseHandler {
                                 );
             }
         }
-
+}
         startGas();
         try minterGateway.updateCollateral(
             _collateral,

@@ -158,6 +158,9 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
             }
+            if (recipient.addr == address(0)) {
+                addExpectedError("InvalidRecipient(address)");
+            }
             expectedError(_err);
         }
     }
@@ -203,12 +206,16 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
         } catch (bytes memory _err) {
             if (_amount > mToken.allowance(from.addr, actor.addr) ||
                 _amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientAllowance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
                 MAX_UINT112 < mToken.totalEarningSupply() + _amount) {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
+            }
+            if (to.addr == address(0)) {
+                addExpectedError("InvalidRecipient(address)");
             }
             expectedError(_err);
         }
@@ -307,6 +314,9 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 MAX_UINT112 < mToken.totalEarningSupply() + _amount) {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
+            }
+            if (to.addr == address(0)) {
+                addExpectedError("InvalidRecipient(address)");
             }
             expectedError(_err);
         }
@@ -409,6 +419,9 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 MAX_UINT112 < mToken.totalEarningSupply() + _amount) {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
+            }
+            if (to.addr == address(0)) {
+                addExpectedError("InvalidRecipient(address)");
             }
             expectedError(_err);
         }
@@ -514,6 +527,9 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 MAX_UINT112 < mToken.totalEarningSupply() + _amount) {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
+            }
+            if (to.addr == address(0)) {
+                addExpectedError("InvalidRecipient(address)");
             }
             expectedError(_err);
         }
