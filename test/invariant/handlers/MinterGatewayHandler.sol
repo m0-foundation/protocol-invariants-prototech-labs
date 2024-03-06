@@ -436,6 +436,7 @@ contract MinterGatewayHandler is BaseHandler {
             }
             // Can potentially still be undercollateralized due to expiring collateral
             if(_isUndercollateralizedMToken(actor.addr, _amount) > 0) addExpectedError("Undercollateralized(uint256,uint256)");
+            if(_amount == 0) addExpectedError("ZeroMintAmount()");
             expectedError(_err);
         }
     }

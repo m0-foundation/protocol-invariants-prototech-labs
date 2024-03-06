@@ -30,21 +30,4 @@ contract RegistrarRegressionTests is RegistrarInvariants {
     function _setMaxLeap(uint256 maxLeap) internal {
         _registrarHandler.setMaxLeap(maxLeap);
     }
-
-    function test_regression_invariant_R_M2_adddd87e_failure() external {
-        _setMaxLeap(3600);
-        _registrarHandler.removeFromList(8784990296086728386472442459532773829916124999010626314444799661087631, 0x9a0ed316e65260cde5650f032a50a3a908fb8a2f9a3a4f44be3e687bea58c61b, 0xb862285bf6Cc39625e5f8A304F6b24dCabbF3Fb1);
-        _registrarHandler.setKey(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0xc2acf414b81c7e3a5dc7019890f393a864c8c905f87f08a55621f3c902952560, 0xed76eceac4cecf1fe2d13ec3c66c814ce56ca11053c542e3d202bd5d2dccc706);
-        _registrarHandler.setKey(316995621703706653271479440712189289668746414849, 0xc2acf414b81c7e3a5dc7019890f393a864c8c905f87f08a55621f3c902952560, 0x0000000000000000000000000000000000000000000000000000000000001827);
-
-        invariant_R_M2();
-    }
-
-    function test_regression_invariant_R_M2_c8fb3e00_failure() external {
-        _setMaxLeap(3600);
-        _registrarHandler.setKey(1, 0x025a345137ef85d332d8e76a16872d2f984844d08c07733d0a0e94e2a0f0f12c, 0x45b0bd383db6ff51dc7496f9b7d782784692073fcc2e8530286c5d32fa0fbf58);
-        _registrarHandler.setKey(15560648, 0x025a345137ef85d332d8e76a16872d2f984844d08c07733d0a0e94e2a0f0f12c, 0x00000000000000000000000000000000000000000000000000000000000050f5);
-
-        invariant_R_M2();
-    }
 }

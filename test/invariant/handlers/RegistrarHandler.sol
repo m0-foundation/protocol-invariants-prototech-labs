@@ -189,6 +189,15 @@ contract RegistrarHandler is BaseHandler {
                     notStandardOrEmergencyGovernorViolationCount++;
             }
 
+            // if key already exists, just overwrite the value
+            for (uint256 i = 0; i < _keys.length; i++) {
+                if (_keys[i] == _key) {
+                    _values[i] = _value;
+                    return;
+                }
+            }
+
+            // key doesn't exist, add it
             _keys.push(_key);
             _values.push(_value);
             _keynum++;
