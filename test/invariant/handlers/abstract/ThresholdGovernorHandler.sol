@@ -86,6 +86,7 @@ abstract contract ThresholdGovernorHandler is BatchGovernorHandler {
                 addExpectedError("ProposalDoesNotExist()");
                 addExpectedError("ProposalCannotBeExecuted()");
             }
+            if(clock() - 1 == 0) addExpectedError("InvalidVoteStart()");
             expectedError(_err);
         }
     }
