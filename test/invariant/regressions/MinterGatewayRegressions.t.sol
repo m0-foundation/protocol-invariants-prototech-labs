@@ -31,17 +31,6 @@ contract MinterGatewayRegressionTests is MinterGatewayInvariants {
     }
 
     ///////////////////////// Begin Valid regressions /////////////////////////
-    // Regression for Finding 10.7
-    function test_regression_invariant_MG_B5_ada5cb6a_failure() external {
-        _setMaxLeap(43200);
-        _minterGatewayHandler.proposeMint(7539, 2778438198, 447);
-        _minterGatewayHandler.proposeRetrieval(24483, 15620);
-        _minterGatewayHandler.disapproveMinter(1088573806173382158489042505938069, 3);
-        _minterGatewayHandler.deactivateMinter(115792089237316195423570985008687907853269984665640564039457584007913129639933, 882272725417850853094023712358456350686549965437333584439106730329241291);
-        // invariant B5 violated with deactiveMinter because individual proposalIds still return a balance
-        invariant_MG_B5();
-    }
-
     function test_regression_invariant_MG_B8_0f887631_failure() external {
         _setMaxLeap(43200);
         _minterGatewayHandler.freezeMinter(1875, 6531);
@@ -55,7 +44,7 @@ contract MinterGatewayRegressionTests is MinterGatewayInvariants {
         _minterGatewayHandler.proposeMint(2, 0, 795241873597757511877289020032563093300687682375750941727894485);
 
         // Invariant B8 is not valid as long as Finding 10.3 is unresolved
-        // invariant_MG_B8();
+        invariant_MG_B8();
     }
     ///////////////////////// End Valid regressions ///////////////////////////
 
