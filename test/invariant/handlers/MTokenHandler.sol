@@ -158,6 +158,9 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
             }
+            if (recipient.addr == address(0)) {
+                addExpectedError("InvalidRecipient(address)");
+            }
             expectedError(_err);
         }
     }
@@ -203,12 +206,17 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
         } catch (bytes memory _err) {
             if (_amount > mToken.allowance(from.addr, actor.addr) ||
                 _amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
+                addExpectedError("InsufficientAllowance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
                 MAX_UINT112 < mToken.totalEarningSupply() + _amount) {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
+            }
+            if (to.addr == address(0)) {
+                addExpectedError("InvalidRecipient(address)");
             }
             expectedError(_err);
         }
@@ -297,16 +305,21 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (block.timestamp <= _validAfter) addExpectedError("AuthorizationNotYetValid(uint256,uint256)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
                 MAX_UINT112 < mToken.totalEarningSupply() + _amount) {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
+            }
+            if (to.addr == address(0)) {
+                addExpectedError("InvalidRecipient(address)");
             }
             expectedError(_err);
         }
@@ -399,16 +412,21 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (block.timestamp <= _validAfter) addExpectedError("AuthorizationNotYetValid(uint256,uint256)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
                 MAX_UINT112 < mToken.totalEarningSupply() + _amount) {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
+            }
+            if (to.addr == address(0)) {
+                addExpectedError("InvalidRecipient(address)");
             }
             expectedError(_err);
         }
@@ -504,16 +522,21 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (block.timestamp <= _validAfter) addExpectedError("AuthorizationNotYetValid(uint256,uint256)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
                 MAX_UINT112 < mToken.totalEarningSupply() + _amount) {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
+            }
+            if (to.addr == address(0)) {
+                addExpectedError("InvalidRecipient(address)");
             }
             expectedError(_err);
         }
@@ -603,10 +626,12 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (actor.addr != to.addr) addExpectedError("CallerMustBePayee(address,address)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
@@ -707,10 +732,12 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (actor.addr != to.addr) addExpectedError("CallerMustBePayee(address,address)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
@@ -812,10 +839,12 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (actor.addr != to.addr) addExpectedError("CallerMustBePayee(address,address)");
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
@@ -873,6 +902,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             }
             if (authorizer.addr != InvariantUtils.GetAddress(authorizer.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -931,6 +961,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             }
             if (authorizer.addr != InvariantUtils.GetAddress(authorizer.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -990,6 +1021,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             }
             if (authorizer.addr != InvariantUtils.GetAddress(authorizer.key) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -1052,6 +1084,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if (from.addr != InvariantUtils.GetAddress(from.key) ||
                 _nonce != mToken.nonces(from.addr) ||
                 bound(_actorIndex, 0, 9) == 0) {
+                addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignature()");
                 addExpectedError("SignerMismatch()");
             }
@@ -1148,9 +1181,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
         uint256 _amount
     ) external resetErrors leap(_actorIndex) useRandomMsgSenderWeighted(_actorIndex, _minterGateway.addr, 75) {
         InvariantUtils.Actor memory recipient = actors[bound(_recipientIndex, 0, actors.length - 1)];
-        // TODO: once Finding 8.1 is resolved we can switch back to this bound
-        // _amount = bound(_amount, 0, MAX_UINT240);
-        _amount = bound(_amount, 0, MAX_UINT112/2);
+        _amount = bound(_amount, 0, MAX_UINT240);
 
         startGas();
         try mToken.mint(recipient.addr, _amount) {
@@ -1166,9 +1197,11 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
             if ((mToken.isEarning(recipient.addr) && MAX_UINT112 < mToken.balanceOf(recipient.addr) + _amount) ||
                  MAX_UINT112 < mToken.totalSupply() + _amount
                 ){
+                addExpectedError("OverflowsPrincipalOfTotalSupply()");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
             }
+            if(_amount == 0) addExpectedError("InsufficientAmount(uint256)");
             expectedError(_err);
         }
     }
@@ -1196,7 +1229,9 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 (mToken.isEarning(account.addr) && _amount > MAX_UINT112)) {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
             }
+            if(_amount == 0) addExpectedError("InsufficientAmount(uint256)");
             expectedError(_err);
         }
     }
@@ -1224,23 +1259,23 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
         uint256 _actorIndex,
         uint256 _accountIndex
     ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
-        InvariantUtils.Actor memory account = actors[bound(_accountIndex, 0, actors.length - 1)];
+        // InvariantUtils.Actor memory account = actors[bound(_accountIndex, 0, actors.length - 1)];
 
-        startGas();
-        try mToken.startEarningOnBehalfOf(account.addr) {
-            stopGas();
+        // startGas();
+        // try mToken.startEarningOnBehalfOf(account.addr) {
+        //     stopGas();
 
-            // success
-        } catch Error(string memory _err) {
-            expectedError(_err);
-        } catch (bytes memory _err) {
-            if (!mToken.hasAllowedEarningOnBehalf(account.addr)) addExpectedError("HasNotAllowedEarningOnBehalf()");
-            if (TTGRegistrarReader.isEarnersListIgnored(_registrar.addr) ||
-                !Registrar(_registrar.addr).listContains(TTGRegistrarReader.EARNERS_LIST, account.addr)) {
-                addExpectedError("NotApprovedEarner()");
-            }
-            expectedError(_err);
-        }
+        //     // success
+        // } catch Error(string memory _err) {
+        //     expectedError(_err);
+        // } catch (bytes memory _err) {
+        //     if (!mToken.hasAllowedEarningOnBehalf(account.addr)) addExpectedError("HasNotAllowedEarningOnBehalf()");
+        //     if (TTGRegistrarReader.isEarnersListIgnored(_registrar.addr) ||
+        //         !Registrar(_registrar.addr).listContains(TTGRegistrarReader.EARNERS_LIST, account.addr)) {
+        //         addExpectedError("NotApprovedEarner()");
+        //     }
+        //     expectedError(_err);
+        // }
     }
 
     function stopEarning(
@@ -1263,51 +1298,51 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
         uint256 _actorIndex,
         uint256 _accountIndex
     ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
-        InvariantUtils.Actor memory account = actors[bound(_accountIndex, 0, actors.length - 1)];
+        // InvariantUtils.Actor memory account = actors[bound(_accountIndex, 0, actors.length - 1)];
 
-        startGas();
-        try mToken.stopEarningOnBehalfOf(account.addr) {
-            stopGas();
-            // success
-        } catch Error(string memory _err) {
-            expectedError(_err);
-        } catch (bytes memory _err) {
-            if (TTGRegistrarReader.isEarnersListIgnored(_registrar.addr) ||
-                TTGRegistrarReader.isApprovedEarner(_registrar.addr, account.addr)) {
-                addExpectedError("IsApprovedEarner()");
-            }
-            expectedError(_err);
-        }
+        // startGas();
+        // try mToken.stopEarningOnBehalfOf(account.addr) {
+        //     stopGas();
+        //     // success
+        // } catch Error(string memory _err) {
+        //     expectedError(_err);
+        // } catch (bytes memory _err) {
+        //     if (TTGRegistrarReader.isEarnersListIgnored(_registrar.addr) ||
+        //         TTGRegistrarReader.isApprovedEarner(_registrar.addr, account.addr)) {
+        //         addExpectedError("IsApprovedEarner()");
+        //     }
+        //     expectedError(_err);
+        // }
     }
 
     function allowEarningOnBehalf(
         uint256 _actorIndex
     ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
 
-        startGas();
-        try mToken.allowEarningOnBehalf() {
-            stopGas();
-            // success
-        } catch Error(string memory _err) {
-            expectedError(_err);
-        } catch (bytes memory _err) {
-            expectedError(_err);
-        }
+        // startGas();
+        // try mToken.allowEarningOnBehalf() {
+        //     stopGas();
+        //     // success
+        // } catch Error(string memory _err) {
+        //     expectedError(_err);
+        // } catch (bytes memory _err) {
+        //     expectedError(_err);
+        // }
     }
 
     function disallowEarningOnBehalf(
         uint256 _actorIndex
     ) public resetErrors leap(_actorIndex) useRandomMsgSender(_actorIndex) {
 
-        startGas();
-        try mToken.disallowEarningOnBehalf() {
-            stopGas();
-            // success
-        } catch Error(string memory _err) {
-            expectedError(_err);
-        } catch (bytes memory _err) {
-            expectedError(_err);
-        }
+        // startGas();
+        // try mToken.disallowEarningOnBehalf() {
+        //     stopGas();
+        //     // success
+        // } catch Error(string memory _err) {
+        //     expectedError(_err);
+        // } catch (bytes memory _err) {
+        //     expectedError(_err);
+        // }
     }
 
     // TTGRegistrar Functions

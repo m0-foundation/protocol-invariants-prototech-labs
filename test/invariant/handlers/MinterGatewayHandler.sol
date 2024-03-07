@@ -66,7 +66,7 @@ contract MinterGatewaySignatureBuilder {
                         minterGateway.UPDATE_COLLATERAL_TYPEHASH(),
                         minter_,
                         collateral_,
-                        retrievalIds_,
+                        keccak256(abi.encodePacked(retrievalIds_)),
                         metadataHash_,
                         timestamp_
                     )
@@ -320,7 +320,7 @@ contract MinterGatewayHandler is BaseHandler {
             if (!happyPath) {
                 if (!(minterGateway.isActiveMinter(actor.addr)))  addExpectedError("InactiveMinter()");
                 if (_collateral > uint256(type(uint112).max))   addExpectedError("InvalidUInt112()");
-                if (_collateral > uint256(type(uint240).max))    addExpectedError("InvalidUInt240()");
+                if (_collateral > uint256(type(uint240).max))   addExpectedError("InvalidUInt240()");
                 if (!(validators.length == timestamps.length && timestamps.length == signatures.length)) addExpectedError("SignatureArrayLengthsMismatch()");
 
                 for (uint256 i = 0; i < validators.length; i++) {
@@ -436,6 +436,7 @@ contract MinterGatewayHandler is BaseHandler {
             }
             // Can potentially still be undercollateralized due to expiring collateral
             if(_isUndercollateralizedMToken(actor.addr, _amount) > 0) addExpectedError("Undercollateralized(uint256,uint256)");
+            if(_amount == 0) addExpectedError("ZeroMintAmount()");
             expectedError(_err);
         }
     }
@@ -463,7 +464,7 @@ contract MinterGatewayHandler is BaseHandler {
             // setup and use a valid minter 1/3 of the time (deactivated minters can't be recovered)
             etchLeap();
             // See Finding 10.4 for why we need to do this bounding
-            amount = uint240(bound(rand(), 0, type(uint112).max));
+            amount = uint240(bound(rand(), 1, type(uint112).max));
             proposeMint(_actorIndex, amount, rand());
             etchLeap();
 
@@ -493,7 +494,8 @@ contract MinterGatewayHandler is BaseHandler {
                 if(block.timestamp < activeAt)                   addExpectedError("PendingMintProposal(uint40)");
                 if(amount > type(uint112).max)                   addExpectedError("InvalidUInt112()");
                 (uint48 mintId , /*createdAt*/, /*address destination_*/, /*amount*/) = minterGateway.mintProposalOf(actor.addr);
-                if (_mintId != mintId)                           addExpectedError("InvalidMintProposal()");
+                if (_mintId != mintId)                          addExpectedError("InvalidMintProposal()");
+                if (amount == 0)                                 addExpectedError("InsufficientAmount(uint256)");
             }
 
 
@@ -512,7 +514,7 @@ contract MinterGatewayHandler is BaseHandler {
             } catch {
             }
 
-            // Related to Finding 8.1
+            // Related to Finding 8.1, leaving here for now
             if (_willOverflowMTokenMint(actor.addr, amount)) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             // Can potentially still be undercollateralized due to expiring collateral
             if(_isUndercollateralizedMToken(actor.addr, amount) > 0) addExpectedError("Undercollateralized(uint256,uint256)");
@@ -569,6 +571,13 @@ contract MinterGatewayHandler is BaseHandler {
                 uint112 principalAmount = _min112(minterGateway.principalOfActiveOwedMOf(_minter), uint112(_maxPrincipalAmount));
                 uint256 amountToRepay = _getPresentAmount(principalAmount);
                 if (amountToRepay > _maxAmount) addExpectedError("ExceedsMaxRepayAmount(uint240,uint240)");
+                uint256 amountToBurn;
+                if (minterGateway.isActiveMinter(_minter)) {
+                    amountToBurn = amountToRepay;
+                } else {
+                    amountToBurn = _min112(uint112(minterGateway.inactiveOwedMOf(_minter)), uint112(_maxAmount));
+                }
+                if (amountToBurn == 0) addExpectedError("InsufficientAmount(uint256)");
             }
 
             expectedError(_err);
@@ -602,6 +611,13 @@ contract MinterGatewayHandler is BaseHandler {
             uint112 principalAmount = _min112(minterGateway.principalOfActiveOwedMOf(_minter), uint112(_maxPrincipalAmount));
             uint256 amountToRepay = _getPresentAmount(principalAmount);
             if (amountToRepay > _maxAmount) addExpectedError("ExceedsMaxRepayAmount(uint240,uint240)");
+            uint256 amountToBurn;
+            if (minterGateway.isActiveMinter(_minter)) {
+                amountToBurn = amountToRepay;
+            } else {
+                amountToBurn = _min112(uint112(minterGateway.inactiveOwedMOf(_minter)), uint112(_maxAmount));
+            }
+            if (amountToBurn == 0) addExpectedError("InsufficientAmount(uint256)");
             expectedError(_err);
         }
     }

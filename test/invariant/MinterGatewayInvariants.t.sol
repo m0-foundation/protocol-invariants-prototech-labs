@@ -237,10 +237,6 @@ contract MinterGatewayInvariants is BaseInvariants, BaseMZeroInvariants {
         for (uint256 i = 0; i < actorCount; i++) {
             InvariantUtils.Actor memory actor;
             (actor.addr, actor.key) = _minterGatewayHandler.actors(i);
-            if (minterGateway.isDeactivatedMinter(actor.addr)) {
-                // TODO INVARIANT VIOLATION SKIP for Finding 10.7
-                continue;
-            }
             uint256 pendingRetrievals;
             // nonce is incremented then used, so range will be inclusive of nonce
             for(uint256 j = 0; j <= nonce; j++) {

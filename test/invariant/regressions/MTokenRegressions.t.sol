@@ -31,16 +31,6 @@ contract MTokenRegressionTests is MTokenInvariants {
         _mTokenHandler.setMaxLeap(maxLeap);
     }
 
-    // TODO: once Finding 8.1 is resolved, re-enable this test to ensure the invariant is working
-    // function test_regression_invariant_M_B2_B3_B4_d1d15304_failure() external {
-    //     _setMaxLeap(43200);
-    //     _mTokenHandler.mint(63353733290953239360908134180967171684, 1822344376649243943, 115792089237316195423570985008687907853269984665640564039457584007913129639933);
-
-    //     invariant_M_B2_B3_B4();
-    // }
-
-
-
     // =========== Further Exploration Required ===========
 
     // function test_regression_invariant_M_B2_B3_B4_da6d4845_failure() external {

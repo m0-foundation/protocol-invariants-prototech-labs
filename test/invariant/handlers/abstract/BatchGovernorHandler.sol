@@ -96,7 +96,8 @@ abstract contract BatchGovernorHandler is BaseHandler {
                 addExpectedError("ProposalDoesNotExist()");
             }
             // array out-of-bounds error
-            if(proposalLength > supportLength) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x32)));
+            if(proposalLength != supportLength) addExpectedError("ArrayLengthMismatch(uint256,uint256)");
+            if(proposalLength == 0) addExpectedError("EmptyProposalIdsArray()");
             addExpectedError("NotPastTimepoint(uint48,uint48)");
             expectedError(_err);
         }
@@ -163,8 +164,12 @@ abstract contract BatchGovernorHandler is BaseHandler {
         } catch Error(string memory _err) {
             expectedError(_err);
         } catch (bytes memory _err) {
-            if (signer.addr != InvariantUtils.GetAddress(signer.key) || chaos) {
-                addExpectedError("InvalidSignature()");
+            if (signer.addr != InvariantUtils.GetAddress(signer.key)) {
+                addExpectedError("SignerMismatch()");
+            }
+            if (chaos) {
+                addExpectedError("InvalidSignatureV()");
+                addExpectedError("InvalidSignatureS()");
             }
             // voteStart = 0 will result in an EvmRevert error (0x0)
             // because of unchecked underflow in _castVote
@@ -214,8 +219,12 @@ abstract contract BatchGovernorHandler is BaseHandler {
         } catch Error(string memory _err) {
             expectedError(_err);
         } catch (bytes memory _err) {
-            if (signer.addr != InvariantUtils.GetAddress(signer.key) || chaos) {
-                addExpectedError("InvalidSignature()");
+            if (signer.addr != InvariantUtils.GetAddress(signer.key)) {
+                addExpectedError("SignerMismatch()");
+            }
+            if (chaos) {
+                addExpectedError("InvalidSignatureV()");
+                addExpectedError("InvalidSignatureS()");
             }
             // voteStart = 0 will result in an EvmRevert error (0x0)
             // because of unchecked underflow in _castVote
@@ -277,8 +286,12 @@ abstract contract BatchGovernorHandler is BaseHandler {
         } catch Error(string memory _err) {
             expectedError(_err);
         } catch (bytes memory _err) {
-            if (signer.addr != InvariantUtils.GetAddress(signer.key) || chaos) {
-                addExpectedError("InvalidSignature()");
+            if (signer.addr != InvariantUtils.GetAddress(signer.key)) {
+                addExpectedError("SignerMismatch()");
+            }
+            if (chaos) {
+                addExpectedError("InvalidSignatureV()");
+                addExpectedError("InvalidSignatureS()");
             }
             // If any proposal voteStart is 0 then the proposal does not exist
             // which will result in an EvmRevert error (0x0) because of unchecked underflow in _castVote
@@ -287,7 +300,7 @@ abstract contract BatchGovernorHandler is BaseHandler {
                 addExpectedError("ProposalDoesNotExist()");
             }
             // array out-of-bounds error
-            if(proposalLength > supportLength) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x32)));
+            if(proposalLength != supportLength ) addExpectedError("ArrayLengthMismatch(uint256,uint256)");
             addExpectedError("NotPastTimepoint(uint48,uint48)");
             expectedError(_err);
         }
@@ -343,8 +356,13 @@ abstract contract BatchGovernorHandler is BaseHandler {
         } catch Error(string memory _err) {
             expectedError(_err);
         } catch (bytes memory _err) {
-            if (signer.addr != InvariantUtils.GetAddress(signer.key) || chaos) {
-                addExpectedError("InvalidSignature()");
+            if (signer.addr != InvariantUtils.GetAddress(signer.key)) {
+                addExpectedError("SignerMismatch()");
+            }
+            if (chaos) {
+                addExpectedError("SignerMismatch()");
+                addExpectedError("InvalidSignatureV()");
+                addExpectedError("InvalidSignatureS()");
             }
             // If any proposal voteStart is 0 then the proposal does not exist
             // which will result in an EvmRevert error (0x0) because of unchecked underflow in _castVote
@@ -353,7 +371,7 @@ abstract contract BatchGovernorHandler is BaseHandler {
                 addExpectedError("ProposalDoesNotExist()");
             }
             // array out-of-bounds error
-            if(proposalIds.length > support.length) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x32)));
+            if(proposalIds.length != support.length ) addExpectedError("ArrayLengthMismatch(uint256,uint256)");
             addExpectedError("NotPastTimepoint(uint48,uint48)");
             expectedError(_err);
         }
