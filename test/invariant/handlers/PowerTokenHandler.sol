@@ -470,8 +470,8 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }
 
-        // Finding 11.1: Consider a named error for insufficient balance
         if (powerToken.balanceOf(from.addr) < _amount) {
+            addExpectedError("InsufficientBalance(address,uint256,uint256)");
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }
 
@@ -558,6 +558,11 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         }
 
         if (_validAfter < _validBefore) {
+            addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
+        }
+
+        if (powerToken.balanceOf(from.addr) < _amount) {
+            addExpectedError("InsufficientBalance(address,uint256,uint256)");
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }
 
@@ -661,6 +666,11 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             addExpectedError("VoteEpoch()");
         }
 
+        if (powerToken.balanceOf(from.addr) < _amount) {
+            addExpectedError("InsufficientBalance(address,uint256,uint256)");
+            addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
+        }
+
         startGas();
         try powerToken.transferWithAuthorization(
             from.addr,
@@ -760,6 +770,11 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             addExpectedError("VoteEpoch()");
         }
 
+        if (powerToken.balanceOf(from.addr) < _amount) {
+            addExpectedError("InsufficientBalance(address,uint256,uint256)");
+            addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
+        }
+
         startGas();
         try powerToken.transferWithAuthorization(
             from.addr,
@@ -851,6 +866,11 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
 
         if (isVotingEpoch()) {
             addExpectedError("VoteEpoch()");
+        }
+
+        if (powerToken.balanceOf(from.addr) < _amount) {
+            addExpectedError("InsufficientBalance(address,uint256,uint256)");
+            addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }
 
         startGas();
@@ -952,6 +972,11 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             addExpectedError("VoteEpoch()");
         }
 
+        if (powerToken.balanceOf(from.addr) < _amount) {
+            addExpectedError("InsufficientBalance(address,uint256,uint256)");
+            addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
+        }
+
         startGas();
         try powerToken.receiveWithAuthorization(
             from.addr,
@@ -1048,6 +1073,11 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
 
         if (isVotingEpoch()) {
             addExpectedError("VoteEpoch()");
+        }
+
+        if (powerToken.balanceOf(from.addr) < _amount) {
+            addExpectedError("InsufficientBalance(address,uint256,uint256)");
+            addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }
 
         startGas();

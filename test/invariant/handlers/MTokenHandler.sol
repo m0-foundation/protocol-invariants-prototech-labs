@@ -206,6 +206,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
         } catch (bytes memory _err) {
             if (_amount > mToken.allowance(from.addr, actor.addr) ||
                 _amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedError("InsufficientAllowance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
@@ -309,6 +310,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
@@ -415,6 +417,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
@@ -524,6 +527,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
@@ -627,6 +631,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
@@ -732,6 +737,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||
@@ -838,6 +844,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > mToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             if ((mToken.isEarning(to.addr) && MAX_UINT112 < mToken.balanceOf(to.addr) + _amount) ||

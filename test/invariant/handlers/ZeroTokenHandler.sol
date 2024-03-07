@@ -149,6 +149,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             if (_amount > zeroToken.allowance(from.addr, actor.addr) ||
                 _amount > zeroToken.balanceOf(from.addr)) {
                 addExpectedError("InsufficientAllowance(address,uint256,uint256)");
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             expectedError(_err);
@@ -244,6 +245,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > zeroToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             expectedError(_err);
@@ -343,6 +345,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > zeroToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             expectedError(_err);
@@ -444,6 +447,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > zeroToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             expectedError(_err);
@@ -540,6 +544,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > zeroToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             expectedError(_err);
@@ -640,6 +645,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > zeroToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             expectedError(_err);
@@ -742,6 +748,7 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
                 addExpectedError("SignerMismatch()");
             }
             if (_amount > zeroToken.balanceOf(from.addr)) {
+                addExpectedError("InsufficientBalance(address,uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             expectedError(_err);
