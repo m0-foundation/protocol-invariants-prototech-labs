@@ -214,8 +214,12 @@ abstract contract BatchGovernorHandler is BaseHandler {
         } catch Error(string memory _err) {
             expectedError(_err);
         } catch (bytes memory _err) {
-            if (signer.addr != InvariantUtils.GetAddress(signer.key) || chaos) {
-                addExpectedError("InvalidSignature()");
+            if (signer.addr != InvariantUtils.GetAddress(signer.key)) {
+                addExpectedError("SignerMismatch()");
+            }
+            if (chaos) {
+                addExpectedError("InvalidSignatureV()");
+                addExpectedError("InvalidSignatureS()");
             }
             // voteStart = 0 will result in an EvmRevert error (0x0)
             // because of unchecked underflow in _castVote
