@@ -1196,6 +1196,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
                 addExpectedError("InvalidUInt112()");
             }
+            if(_amount == 0) addExpectedError("InsufficientAmount(uint256)");
             expectedError(_err);
         }
     }
@@ -1225,6 +1226,7 @@ contract MTokenHandler is BaseHandler, EIP3009Handler {
                 addExpectedError("InvalidUInt112()");
                 addExpectedError("InsufficientBalance(address,uint256,uint256)");
             }
+            if(_amount == 0) addExpectedError("InsufficientAmount(uint256)");
             expectedError(_err);
         }
     }

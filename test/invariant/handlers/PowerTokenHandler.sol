@@ -135,6 +135,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             addExpectedError("TransferFromFailed()");
             //addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             addExpectedError("InsufficientAuctionSupply(uint240,uint240)");
+            if (_minAmount == 0 || _maxAmount == 0) addExpectedError("ZeroPurchaseAmount()");
             expectedError(_err);
         }
     }
@@ -324,7 +325,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             addExpectedError("VoteEpoch()");
         }
 
-        // TODO: do we really need this?  What happens when we delegate to the powerToken address?        
+        // TODO: do we really need this?  What happens when we delegate to the powerToken address?
         if (delegatee.addr == address(powerToken)) {
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }

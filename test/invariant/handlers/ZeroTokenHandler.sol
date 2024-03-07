@@ -1079,6 +1079,8 @@ contract ZeroTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
                 MAX_UINT240 < zeroToken.totalSupply() + _amount) {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
+            if(_amount == 0) addExpectedError("InsufficientAmount(uint256)");
+
             expectedError(_err);
         }
     }

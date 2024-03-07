@@ -464,7 +464,7 @@ contract MinterGatewayHandler is BaseHandler {
             // setup and use a valid minter 1/3 of the time (deactivated minters can't be recovered)
             etchLeap();
             // See Finding 10.4 for why we need to do this bounding
-            amount = uint240(bound(rand(), 0, type(uint112).max));
+            amount = uint240(bound(rand(), 1, type(uint112).max));
             proposeMint(_actorIndex, amount, rand());
             etchLeap();
 
@@ -494,7 +494,8 @@ contract MinterGatewayHandler is BaseHandler {
                 if(block.timestamp < activeAt)                   addExpectedError("PendingMintProposal(uint40)");
                 if(amount > type(uint112).max)                   addExpectedError("InvalidUInt112()");
                 (uint48 mintId , /*createdAt*/, /*address destination_*/, /*amount*/) = minterGateway.mintProposalOf(actor.addr);
-                if (_mintId != mintId)                           addExpectedError("InvalidMintProposal()");
+                if (_mintId != mintId)                          addExpectedError("InvalidMintProposal()");
+                if (amount == 0)                                 addExpectedError("InsufficientAmount(uint256)");
             }
 
 
@@ -570,6 +571,13 @@ contract MinterGatewayHandler is BaseHandler {
                 uint112 principalAmount = _min112(minterGateway.principalOfActiveOwedMOf(_minter), uint112(_maxPrincipalAmount));
                 uint256 amountToRepay = _getPresentAmount(principalAmount);
                 if (amountToRepay > _maxAmount) addExpectedError("ExceedsMaxRepayAmount(uint240,uint240)");
+                uint256 amountToBurn;
+                if (minterGateway.isActiveMinter(_minter)) {
+                    amountToBurn = amountToRepay;
+                } else {
+                    amountToBurn = _min112(uint112(minterGateway.inactiveOwedMOf(_minter)), uint112(_maxAmount));
+                }
+                if (amountToBurn == 0) addExpectedError("InsufficientAmount(uint256)");
             }
 
             expectedError(_err);
