@@ -277,6 +277,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         } catch Error(string memory _err) {
             expectedError(_err);
         } catch (bytes memory _err) {
+            addExpectedError("SignerMismatch()");
             addExpectedError("InvalidSignatureV()");
             addExpectedError("InvalidSignature()");
             addExpectedError("InvalidAccountNonce(uint256,uint256)");
@@ -349,6 +350,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         } catch (bytes memory _err) {
             addExpectedError("InvalidSignatureV()");
             addExpectedError("InvalidSignature()");
+            addExpectedError("SignerMismatch()");
             addExpectedError("InvalidAccountNonce(uint256,uint256)");
             expectedError(_err);
         }
@@ -463,8 +465,8 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             addExpectedError("VoteEpoch()");
         }
 
-        // Finding 11.2: Consider a named error for insufficient allowance
         if (powerToken.allowance(from.addr, actor.addr) < _amount) {
+            addExpectedError("InsufficientAllowance(address,uint256,uint256)");
             addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
         }
 

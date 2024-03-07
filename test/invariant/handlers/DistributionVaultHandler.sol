@@ -145,7 +145,7 @@ contract DistributionVaultHandler is BaseHandler {
             if (powerToken.balanceOf(address(powerToken)) == 0) addExpectedError("TransferFailed()");
             if(_endEpoch >= distributionVault.clock()) addExpectedError("NotPastTimepoint(uint256,uint256)");
             if(_startEpoch > _endEpoch) {
-                addExpectedError("StartEpochAfterEndEpoch()");
+                addExpectedError("StartEpochAfterEndEpoch(uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             } else {
                 // if totalSupply is 0 we will get a division by zero error
@@ -222,17 +222,19 @@ contract DistributionVaultHandler is BaseHandler {
             }
             if(_endEpoch >= distributionVault.clock()) addExpectedError("NotPastTimepoint(uint256,uint256)");
             if(_startEpoch > _endEpoch) {
-                addExpectedError("StartEpochAfterEndEpoch()");
+                addExpectedError("StartEpochAfterEndEpoch(uint256,uint256)");
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             } else {
                 // if totalSupply is 0 we will get a division by zero error
                 if(_expectDivisionBy0(_startEpoch, _endEpoch)) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x12)));
             }
-            if(
-                actors[accountIndex].addr == address(0)                 ||
+            if (actors[accountIndex].addr == address(0)                 ||
                 actors[accountIndex].addr == address(distributionVault) ||
-                sign.s                    == bytes32(_actorIndex)
-            ) addExpectedError("InvalidSignature()");
+                sign.s == bytes32(_actorIndex)) {
+                addExpectedError("SignerMismatch()");
+                addExpectedError("InvalidSignatureV()");
+                addExpectedError("InvalidSignature()");
+                }
             // _actorIndex is a stand-in for deadline
             if(_actorIndex < block.timestamp) addExpectedError("SignatureExpired(uint256,uint256)");
             // TransferFailed();

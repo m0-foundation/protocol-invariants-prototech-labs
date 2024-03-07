@@ -359,6 +359,7 @@ abstract contract BatchGovernorHandler is BaseHandler {
                 addExpectedError("SignerMismatch()");
             }
             if (chaos) {
+                addExpectedError("SignerMismatch()");
                 addExpectedError("InvalidSignatureV()");
                 addExpectedError("InvalidSignatureS()");
             }
