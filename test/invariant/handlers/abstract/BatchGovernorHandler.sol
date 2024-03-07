@@ -291,7 +291,7 @@ abstract contract BatchGovernorHandler is BaseHandler {
                 addExpectedError("ProposalDoesNotExist()");
             }
             // array out-of-bounds error
-            if(proposalLength > supportLength) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x32)));
+            if(proposalLength != supportLength ) addExpectedError("ArrayLengthMismatch(uint256,uint256)");
             addExpectedError("NotPastTimepoint(uint48,uint48)");
             expectedError(_err);
         }
