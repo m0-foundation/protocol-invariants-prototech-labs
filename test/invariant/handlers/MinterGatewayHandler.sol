@@ -611,6 +611,13 @@ contract MinterGatewayHandler is BaseHandler {
             uint112 principalAmount = _min112(minterGateway.principalOfActiveOwedMOf(_minter), uint112(_maxPrincipalAmount));
             uint256 amountToRepay = _getPresentAmount(principalAmount);
             if (amountToRepay > _maxAmount) addExpectedError("ExceedsMaxRepayAmount(uint240,uint240)");
+            uint256 amountToBurn;
+            if (minterGateway.isActiveMinter(_minter)) {
+                amountToBurn = amountToRepay;
+            } else {
+                amountToBurn = _min112(uint112(minterGateway.inactiveOwedMOf(_minter)), uint112(_maxAmount));
+            }
+            if (amountToBurn == 0) addExpectedError("InsufficientAmount(uint256)");
             expectedError(_err);
         }
     }
