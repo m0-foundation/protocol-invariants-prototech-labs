@@ -29,4 +29,139 @@ contract MinterGatewayRegressionTests is MinterGatewayInvariants {
     function _setMaxLeap(uint256 maxLeap) internal {
         _minterGatewayHandler.setMaxLeap(maxLeap);
     }
+
+    function test_regression_invariant_MG_B1_fa0e6476_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(22593, 3771);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_B1();
+    }
+
+    function test_regression_invariant_MG_B2_64112dab_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(22593, 4072907491);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_B2();
+    }
+
+    function test_regression_invariant_MG_B3_64112dab_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(22593, 4072907491);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_B3();
+    }
+
+    function test_regression_invariant_MG_B4_1fd379c5_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(17374, 4072907491);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_B4();
+    }
+
+    function test_regression_invariant_MG_B5_45b25b9e_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(22593, 3179243142);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_B5();
+    }
+
+    function test_regression_invariant_MG_B6_4d0c8cf5_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(131, 1522);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_B6();
+    }
+
+    function test_regression_invariant_MG_B7_549439db_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(17374, 3771);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_B7();
+    }
+
+    function test_regression_invariant_MG_B8_979d3ec2_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(17374, 4072907491);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_B8();
+    }
+
+    function test_regression_invariant_MG_B9_64112dab_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(22593, 4072907491);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_B9();
+    }
+
+    function test_regression_invariant_MG_G1_979d3ec2_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(17374, 4072907491);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_G1();
+    }
+
+    function test_regression_invariant_MG_M1_979d3ec2_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(17374, 4072907491);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_M1();
+    }
+
+    function test_regression_invariant_MG_M2_979d3ec2_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(17374, 4072907491);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_M2();
+    }
+
+    function test_regression_invariant_MG_N1_979d3ec2_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(17374, 4072907491);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_N1();
+    }
+
+    function test_regression_invariant_MG_N2_979d3ec2_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(17374, 4072907491);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_N2();
+    }
+
+    function test_regression_invariant_MG_T1_defd2029_failure() external {
+        _setMaxLeap(43200);
+        _minterGatewayHandler.updateMintRatio(1757, 6648);
+        _minterGatewayHandler.updateMintFreezerTime(216017959017590092151982804865324, 4294967294);
+        _minterGatewayHandler.burnM_minterPrincipalMax(115792089237316195423570985008687907853269984665640564039457584007913129639933, 0x9C82D5452b1B0bb8402e657162d74C6d8ed81bd8, 42103246570071479623086, 0);
+
+        invariant_MG_T1();
+    }
 }
