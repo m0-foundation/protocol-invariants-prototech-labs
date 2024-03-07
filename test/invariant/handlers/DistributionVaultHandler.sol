@@ -138,7 +138,9 @@ contract DistributionVaultHandler is BaseHandler {
         } catch Error(string memory _err) {
             expectedError(_err);
         } catch (bytes memory _err) {
-
+            if (actors[destinationIndex].addr == address(0)) {
+                addExpectedError("InvalidDestinationAddress()");
+            }
             if (isVotingEpoch()) {
                 addExpectedError("TransferFailed()");
             }
@@ -227,6 +229,9 @@ contract DistributionVaultHandler is BaseHandler {
             } else {
                 // if totalSupply is 0 we will get a division by zero error
                 if(_expectDivisionBy0(_startEpoch, _endEpoch)) addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x12)));
+            }
+            if (actors[bound(_actorIndex, accountIndex, actors.length - 1)].addr == address(0)) {
+                addExpectedError("InvalidDestinationAddress()");
             }
             if (actors[accountIndex].addr == address(0)                 ||
                 actors[accountIndex].addr == address(distributionVault) ||
