@@ -279,6 +279,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         } catch (bytes memory _err) {
             addExpectedError("SignerMismatch()");
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("InvalidAccountNonce(uint256,uint256)");
             expectedError(_err);
@@ -349,6 +350,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             expectedError(_err);
         } catch (bytes memory _err) {
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("SignerMismatch()");
             addExpectedError("InvalidAccountNonce(uint256,uint256)");
@@ -601,6 +603,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             }
             addExpectedError("SignerMismatch()");
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("AuthorizationUsed(address,bytes32)");
             addExpectedError("AuthorizationExpired(uint256,uint256)");
@@ -704,6 +707,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             }
             addExpectedError("SignerMismatch()");
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("AuthorizationUsed(address,bytes32)");
             addExpectedError("AuthorizationNotYetValid(uint256,uint256)");
@@ -809,6 +813,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
             }
             addExpectedError("SignerMismatch()");
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("AuthorizationUsed(address,bytes32)");
             addExpectedError("AuthorizationNotYetValid(uint256,uint256)");
@@ -905,6 +910,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("SignerMismatch()");
             addExpectedError("AuthorizationUsed(address,bytes32)");
@@ -1007,6 +1013,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("SignerMismatch()");
             addExpectedError("AuthorizationUsed(address,bytes32)");
@@ -1111,6 +1118,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
                 addExpectedErrorBytes32(keccak256(abi.encodeWithSignature("Panic(uint256)", 0x11)));
             }
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("SignerMismatch()");
             addExpectedError("AuthorizationUsed(address,bytes32)");
@@ -1163,6 +1171,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         } catch (bytes memory _err) {
             addExpectedError("SignerMismatch()");
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("AuthorizationAlreadyUsed(address,bytes32)");
             expectedError(_err);
@@ -1214,6 +1223,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         } catch (bytes memory _err) {
             addExpectedError("SignerMismatch()");
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("AuthorizationAlreadyUsed(address,bytes32)");
             expectedError(_err);
@@ -1267,6 +1277,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         } catch (bytes memory _err) {
             addExpectedError("SignerMismatch()");
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("AuthorizationAlreadyUsed(address,bytes32)");
             expectedError(_err);
@@ -1325,6 +1336,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         } catch (bytes memory _err) {
             addExpectedError("SignerMismatch()");
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("SignatureExpired(uint256,uint256)");
             expectedError(_err);
@@ -1387,6 +1399,7 @@ contract PowerTokenHandler is BaseHandler, EIP3009Handler, EIP5805Handler {
         } catch (bytes memory _err) {
             addExpectedError("SignerMismatch()");
             addExpectedError("InvalidSignatureV()");
+            addExpectedError("InvalidSignatureS()");
             addExpectedError("InvalidSignature()");
             addExpectedError("SignatureExpired(uint256,uint256)");
             expectedError(_err);
