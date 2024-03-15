@@ -104,8 +104,8 @@ contract MinterGatewayInvariants is BaseInvariants, BaseMZeroInvariants {
     function initRegistrar() internal {
         if (_realRegistrar) {
             vm.startPrank(Registrar(_registrar.addr).standardGovernor());
-            Registrar(_registrar.addr).setKey(TTGRegistrarReader.BASE_EARNER_RATE, bytes32(uint256(400)));
-            Registrar(_registrar.addr).setKey(TTGRegistrarReader.BASE_MINTER_RATE, bytes32(uint256(400)));
+            Registrar(_registrar.addr).setKey("base_minter_rate", bytes32(uint256(400)));
+            Registrar(_registrar.addr).setKey("max_earner_rate", bytes32(uint256(400)));
             Registrar(_registrar.addr).setKey(TTGRegistrarReader.EARNER_RATE_MODEL, bytes32(uint256(uint160(_earnerRateModel))));
             Registrar(_registrar.addr).setKey(TTGRegistrarReader.MINTER_RATE_MODEL, bytes32(uint256(uint160(_minterRateModel))));
             Registrar(_registrar.addr).setKey(TTGRegistrarReader.UPDATE_COLLATERAL_VALIDATOR_THRESHOLD, bytes32(uint256(0)));
@@ -116,8 +116,8 @@ contract MinterGatewayInvariants is BaseInvariants, BaseMZeroInvariants {
             Registrar(_registrar.addr).setKey(TTGRegistrarReader.PENALTY_RATE, bytes32(uint256(0)));
             vm.stopPrank();
         } else {
-            MockTTGRegistrar(_registrar.addr).updateConfig(TTGRegistrarReader.BASE_EARNER_RATE, 400);
-            MockTTGRegistrar(_registrar.addr).updateConfig(TTGRegistrarReader.BASE_MINTER_RATE, 400);
+            MockTTGRegistrar(_registrar.addr).updateConfig("base_minter_rate", 400);
+            MockTTGRegistrar(_registrar.addr).updateConfig("max_earner_rate", 400);
             MockTTGRegistrar(_registrar.addr).updateConfig(TTGRegistrarReader.EARNER_RATE_MODEL, _earnerRateModel);
             MockTTGRegistrar(_registrar.addr).updateConfig(TTGRegistrarReader.MINTER_RATE_MODEL, _minterRateModel);
             if (!_integration) {
