@@ -50,13 +50,6 @@ contract MZeroInvariants is
             _receivers.push(guy);
         }
 
-        // deployer actor
-        _initialPowerAccounts.push(deployer.addr);
-        _initialPowerBalances.push(1e12);
-        _initialZeroAccounts.push(deployer.addr);
-        _initialZeroBalances.push(1e12);
-        _actors.push(deployer);
-        _receivers.push(deployer);
 
         // zero actor
         _receivers.push(_zero);

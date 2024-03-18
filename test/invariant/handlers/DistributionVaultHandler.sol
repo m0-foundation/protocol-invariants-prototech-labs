@@ -32,6 +32,16 @@ contract DistributionVaultHandler is BaseHandler {
     PowerToken  public powerToken;
     ZeroToken   public zeroToken;
 
+    struct ClaimDigestStruct{  // using this to get past stack too deep errors
+        address account_;
+        address token_;
+        uint256 startEpoch_;
+        uint256 endEpoch_;
+        address destination_;
+        uint256 nonce;
+        uint256 deadline_;
+    }
+
     // Defined in PureEpochs.sol
     uint40 internal constant _EPOCH_PERIOD = 15 days;
 
@@ -168,14 +178,27 @@ contract DistributionVaultHandler is BaseHandler {
 
         // build signature
         InvariantUtils.Signature memory sign;
+
+        //using this to get past stack too deep errors
+        ClaimDigestStruct memory claimDigestStruct = ClaimDigestStruct(
+            actors[accountIndex].addr,
+            address(powerToken),
+            _startEpoch,
+            _endEpoch,
+            actors[bound(_actorIndex, accountIndex, actors.length - 1)].addr, // destination
+            distributionVault.nonces(actors[accountIndex].addr),
+            _actorIndex // stand-in for deadline
+        );
+
         {
             bytes32 digest = distributionVault.getClaimDigest(
-                address(powerToken),
-                _startEpoch,
-                _endEpoch,
-                actors[bound(_actorIndex, accountIndex, actors.length - 1)].addr, // destination
-                distributionVault.nonces(actors[accountIndex].addr),
-                _actorIndex // stand-in for deadline
+                claimDigestStruct.account_,
+                claimDigestStruct.token_,
+                claimDigestStruct.startEpoch_,
+                claimDigestStruct.endEpoch_,
+                claimDigestStruct.destination_,
+                claimDigestStruct.nonce,
+                claimDigestStruct.deadline_
             );
 
             (sign.v, sign.r, sign.s) = vm.sign(actors[accountIndex].key, digest);
@@ -188,12 +211,12 @@ contract DistributionVaultHandler is BaseHandler {
 
         startGas();
         try distributionVault.claimBySig(
-            actors[accountIndex].addr,
-            address(powerToken), // token
-            _startEpoch,
-            _endEpoch,
-            actors[bound(_actorIndex, accountIndex, actors.length - 1)].addr, // destination
-            _actorIndex, // stand-in for deadline
+            claimDigestStruct.account_,
+            claimDigestStruct.token_,
+            claimDigestStruct.startEpoch_,
+            claimDigestStruct.endEpoch_,
+            claimDigestStruct.destination_,
+            claimDigestStruct.deadline_,
             abi.encodePacked(sign.r, sign.s, sign.v) // signature
         ) returns (uint256 claimed) {
             stopGas();

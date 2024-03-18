@@ -302,6 +302,7 @@ abstract contract BatchGovernorHandler is BaseHandler {
             // array out-of-bounds error
             if(proposalLength != supportLength ) addExpectedError("ArrayLengthMismatch(uint256,uint256)");
             addExpectedError("NotPastTimepoint(uint48,uint48)");
+            addExpectedError("EmptyProposalIdsArray()");
             expectedError(_err);
         }
     }
